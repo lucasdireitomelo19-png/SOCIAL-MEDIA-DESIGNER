@@ -3,11 +3,29 @@
 Templates adaptáveis de carrossel (mín. 4, máx. 7 slides). Sempre usar **"perfil"** no lugar de "página"
 nos textos das artes. Alternar publicação entre a versão **fundo escuro** e **fundo claro** da identidade.
 
-Bases no Canva:
+Bases no Canva (linha v1 — gráfica/minimalista):
 - Fundo escuro (papel amassado azul petróleo): design `DAHR_SCvODo`
 - Fundo claro (papel amassado off-white): design `DAHR_hgWfkY`
 - Carrossel único (5 escuras + 5 claras, intercaladas na publicação): design `DAHR_vz2L1Q`
   https://www.canva.com/design/DAHR_vz2L1Q/edit
+
+## Roteiro E — linha editorial v2 (foto sem pessoas + serifada/sans)
+
+Baseado em referências de mercado (Josi Muniz, Jessi Lima, Vitória Zuntini, Carol Ferreira,
+Mariana Guimarães). Fundo com foto genérica sem pessoas, headline misturando serifada display
+(itálico/regular) com peso forte, 1-2 palavras em destaque laranja, eyebrow "@lucasdireitoo" no
+canto superior, legenda pequena em caixa alta abaixo do headline.
+
+Templates base no Canva (intercalar os dois estilos entre slides):
+- Estilo A (eyebrow cápsula + linha itálica de abertura): design `DAHR_3ygUFw`
+- Estilo B (eyebrow caixa branca + legenda embaixo): design `DAHR_6ejOgk`
+- Exemplo montado — carrossel "3 decisões que mudaram meu processo criativo" (5 slides,
+  A/B/A/B/A): design `DAHR_9FriWI` — https://www.canva.com/design/DAHR_9FriWI/edit
+
+Observação técnica: esses templates da IA usam posicionamento absoluto pensado pro texto
+original — ao trocar o texto é preciso redimensionar (`width: 900`, `left: 90`) e reposicionar
+cada linha (`top` sequencial com espaçamento) pra evitar sobreposição, além de reduzir o
+tamanho da fonte de palavras grandes na linha de destaque.
 
 Observação: as páginas claras foram reconstruídas a partir da própria estrutura do design escuro
 (fundo sólido #EDEDE9 + texto recolorido para #0B1E2E), garantindo as fontes corretas
