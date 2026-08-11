@@ -55,6 +55,18 @@ nos textos das artes.
 - Substituir sempre "página" → "perfil" no texto final das artes.
 - Cores da marca (ver `docs/brand/identidade-visual.md`) como fio condutor.
 
----
+## Design das artes — linha ativa
 
-A parte de design das artes (layout, tipografia, composição) está em aberto — ainda não definida.
+Layout base: fundo sólido azul-petróleo `#0B1E2E`, headline bold condensado (Anton) centralizado
+misturando duas cores — texto principal em off-white `#F8E8C5`/`#EDEDE9` e a palavra-chave em
+laranja `#E14D24`/`#F4A259` — com legenda de apoio em Poppins abaixo. Slides de lista usam bullet
+com seta (→). Inspirado no layout da Vitória Zuntini, recolorido pra paleta da marca.
+
+Carrossel pronto — Roteiro B "3 erros que travam seu perfil" (6 slides: capa, erro 1/2/3, resumo,
+CTA): design `DAHSAqKQ_uQ` — https://www.canva.com/design/DAHSAqKQ_uQ/edit
+
+Observação técnica: pra editar o texto de um design gerado por IA sem quebrar a formatação
+(cores por trecho, fonte), usar `find_and_replace_text` element por element_id (troca o texto de
+uma região específica preservando a cor/fonte dela) em vez de `replace_text` (que substitui todo o
+elemento e colapsa pra uma única formatação). Pra montar o carrossel: duplicar a página-base N
+vezes com `merge-designs` (`insert_pages`), depois editar o texto de cada página.
