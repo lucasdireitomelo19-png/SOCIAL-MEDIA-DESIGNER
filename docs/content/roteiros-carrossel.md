@@ -16,16 +16,24 @@ Mariana Guimarães). Fundo com foto genérica sem pessoas, headline misturando s
 (itálico/regular) com peso forte, 1-2 palavras em destaque laranja, eyebrow "@lucasdireitoo" no
 canto superior, legenda pequena em caixa alta abaixo do headline.
 
-Templates base no Canva (intercalar os dois estilos entre slides):
-- Estilo A (eyebrow cápsula + linha itálica de abertura): design `DAHR_3ygUFw`
-- Estilo B (eyebrow caixa branca + legenda embaixo): design `DAHR_6ejOgk`
-- Exemplo montado — carrossel "3 decisões que mudaram meu processo criativo" (5 slides,
-  A/B/A/B/A): design `DAHR_9FriWI` — https://www.canva.com/design/DAHR_9FriWI/edit
+Templates base no Canva:
+- Estilo A (linha itálica de abertura + palavra grande em destaque): design `DAHR_3ygUFw`
+- Estilo B (eyebrow caixa branca + headline empilhado + legenda embaixo): design `DAHR_6ejOgk`
+
+**Dois carrosséis finais, cada um 100% num estilo (não mais intercalados)** — tema "3 decisões
+que mudaram meu processo criativo", já em português:
+- Carrossel A: `DAHR_wJLpjI` — https://www.canva.com/design/DAHR_wJLpjI/edit
+- Carrossel B: `DAHR_2uihF4` — https://www.canva.com/design/DAHR_2uihF4/edit
 
 Observação técnica: esses templates da IA usam posicionamento absoluto pensado pro texto
-original — ao trocar o texto é preciso redimensionar (`width: 900`, `left: 90`) e reposicionar
-cada linha (`top` sequencial com espaçamento) pra evitar sobreposição, além de reduzir o
-tamanho da fonte de palavras grandes na linha de destaque.
+original (inclusive uma sobreposição tipográfica fina, tipo capa de revista) — trocar o texto
+via API quebra essa sobreposição e não dá pra recalcular reposicionando manualmente (a IA ajusta
+isso com base na "silhueta" de cada palavra, não é algo replicável em pixels). A solução que
+funcionou: regerar cada slide via `generate-design` já com o texto final em português desde o
+início (a IA desenha a composição certa pra aquelas palavras), revisar o thumbnail de cada
+candidato e escolher o que bate com o estilo, depois montar o carrossel com `merge-designs`. Cada
+geração retorna 4 candidatos e nem todos batem com o estilo pedido — é normal ter que checar 2-4
+antes de achar um bom.
 
 Observação: as páginas claras foram reconstruídas a partir da própria estrutura do design escuro
 (fundo sólido #EDEDE9 + texto recolorido para #0B1E2E), garantindo as fontes corretas
