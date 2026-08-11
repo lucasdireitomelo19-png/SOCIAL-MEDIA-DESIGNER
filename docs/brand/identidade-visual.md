@@ -23,7 +23,7 @@ gráficos secundários (linhas, ícones, tags).
 
 ## Tipografia
 
-### v1 — gráfica/minimalista (base para textos utilitários e docs)
+### v1 — gráfica/minimalista (linha ativa)
 
 | Papel        | Fonte                  |
 |--------------|-------------------------|
@@ -31,7 +31,7 @@ gráficos secundários (linhas, ícones, tags).
 | Subtítulo    | Poppins (Bold)          |
 | Parágrafo/corpo | Montserrat (regular, sem bold) |
 
-### v2 — editorial (linha atual dos carrosséis, a partir de referências de mercado)
+### v2 — editorial (em pausa — ver observações no roteiro de carrossel)
 
 | Papel        | Fonte                  |
 |--------------|-------------------------|
@@ -46,7 +46,13 @@ normal + itálico/peso forte, com 1-2 palavras destacadas na cor de accent → l
 
 ## Estilo visual
 
-### v2 — editorial com foto (linha atual)
+### v1 — gráfica/minimalista (linha ativa)
+
+- Minimalista, sem fotos, textura de papel amassado como fundo.
+- Título grande em Anton, hierarquia 100% tipográfica.
+- Ver `docs/content/roteiros-carrossel.md` (Roteiros A-D) para estrutura de conteúdo.
+
+### v2 — editorial com foto (em pausa)
 
 - **Foto de fundo genérica, sem pessoas** — objetos, ambientes, texturas (ex.: mesa de trabalho, xícara,
   papel, tecido) tratada com overlay sutil na paleta da marca para manter contraste com o texto.
@@ -55,13 +61,11 @@ normal + itálico/peso forte, com 1-2 palavras destacadas na cor de accent → l
 - Eyebrow pequeno em caixa alta nos cantos superiores (autoria/nicho).
 - Texto de apoio compacto, alinhado à direita ou abaixo do headline.
 - CTA discreto no rodapé quando for carrossel ("arrasta pro lado").
-- Mantém a paleta de cores da marca como fio condutor (fundo escuro azul-petróleo em overlay, texto
-  claro, destaque laranja).
-
-### v1 — gráfica/minimalista (alternativa sem foto, mantida como opção)
-
-- Minimalista, sem fotos, textura de papel amassado como fundo.
-- Título grande em Anton, hierarquia 100% tipográfica.
+- **Pausado**: os templates gerados por IA calculam uma sobreposição tipográfica fina (tipo capa de
+  revista) específica pras palavras originais em inglês; substituir o texto por conteúdo em português
+  quebra essa sobreposição e não há como recalcular isso via API do Canva (sem acesso a redesenho de
+  layout, só a elementos individuais). Retomar exigiria regerar cada slide via IA com o texto final já
+  em português desde o início, slide por slide — ver `docs/content/roteiros-carrossel.md` (Roteiro E).
 
 ## Formatos de produção
 
