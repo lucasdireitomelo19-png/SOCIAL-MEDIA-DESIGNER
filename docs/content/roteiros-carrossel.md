@@ -6,6 +6,12 @@ nos textos das artes. Alternar publicação entre a versão **fundo escuro** e *
 Bases no Canva:
 - Fundo escuro (papel amassado azul petróleo): design `DAHR_SCvODo`
 - Fundo claro (papel amassado off-white): design `DAHR_hgWfkY`
+- Carrossel único (5 escuras + 5 claras, intercaladas na publicação): design `DAHR_vz2L1Q`
+  https://www.canva.com/design/DAHR_vz2L1Q/edit
+
+Observação: as páginas claras usam uma fonte serifada diferente de Anton/Poppins/Montserrat —
+a API do Canva não permite trocar a fonte de um elemento existente. A textura de papel foi
+redimensionada manualmente para cobrir a página inteira como fundo.
 
 ## Estrutura padrão
 
