@@ -62,11 +62,23 @@ misturando duas cores — texto principal em off-white `#F8E8C5`/`#EDEDE9` e a p
 laranja `#E14D24`/`#F4A259` — com legenda de apoio em Poppins abaixo. Slides de lista usam bullet
 com seta (→). Inspirado no layout da Vitória Zuntini, recolorido pra paleta da marca.
 
-Carrossel pronto — Roteiro B "3 erros que travam seu perfil" (6 slides: capa, erro 1/2/3, resumo,
-CTA): design `DAHSAqKQ_uQ` — https://www.canva.com/design/DAHSAqKQ_uQ/edit
+Carrosséis prontos:
+- Roteiro B "3 erros que travam seu perfil" (6 slides, estilo Vitória Zuntini — fundo sólido escuro):
+  design `DAHSAqKQ_uQ` — https://www.canva.com/design/DAHSAqKQ_uQ/edit
+- Roteiro A "3 dicas pra crescer seu perfil" (5 slides, estilo Jessi Lima — fundo claro texturizado
+  `#EDEDE9`, headline dividido em 3 blocos de texto com cores alternadas laranja/azul-marinho,
+  parágrafo de apoio no topo, "ARRASTA PRA VER MAIS" no rodapé): design `DAHSAr-4xbs` —
+  https://www.canva.com/design/DAHSAr-4xbs/edit
+
+Referências ainda não aplicadas: Carol Ferreira (foto + marcador/handwriting), Josi Muniz (foto +
+caixa pontilhada), Mariana Guimarães (foto + palavra itálica de destaque) — ver
+`docs/brand/identidade-visual.md`.
 
 Observação técnica: pra editar o texto de um design gerado por IA sem quebrar a formatação
 (cores por trecho, fonte), usar `find_and_replace_text` element por element_id (troca o texto de
 uma região específica preservando a cor/fonte dela) em vez de `replace_text` (que substitui todo o
-elemento e colapsa pra uma única formatação). Pra montar o carrossel: duplicar a página-base N
-vezes com `merge-designs` (`insert_pages`), depois editar o texto de cada página.
+elemento e colapsa pra uma única formatação) — só usar `replace_text` quando o elemento já é
+single-region (como no template da Jessi Lima, onde cada trecho é um elemento de texto separado).
+Pra montar o carrossel: duplicar a página-base N vezes com `merge-designs` (`insert_pages`), depois
+editar o texto de cada página. Se uma palavra grande ficar larga demais e quebrar linha, reduzir o
+`font_size` daquele elemento em ~15-20%.
