@@ -17,6 +17,17 @@ ritmo iniciado em [data do primeiro post duplo, ver nota de checkpoint abaixo]).
 4. **Lifestyle Reels** (domingo) — liberdade de trabalhar pela internet, tom mais pessoal e
    aspiracional. Ex.: "Liberdade Digital".
 
+   **Regra fixa**: esse pilar atrai um público mais amplo (quem quer liberdade/renda online) que
+   não é automaticamente o mesmo público de "quero aprender growth". Toda legenda de lifestyle
+   reels precisa ter uma ponte explícita de volta pros outros pilares — sem isso o post vira
+   vitrine pessoal que não converte. Modelo de CTA (variar a cada post, não repetir literal):
+   - "Essa liberdade não caiu do céu — é resultado de dominar conteúdo e redes. É isso que eu
+     ensino aqui todo dia."
+   - "Um ano atrás eu não tinha isso. O que mudou? Aprender a criar conteúdo que funciona. Segue
+     os outros posts do perfil pra ver como."
+   - "Quer essa rotina também? Começa pelos posts de quarta — é lá que eu ensino o caminho, não só
+     mostro o resultado."
+
 ## Estrutura semanal
 
 | Dia       | Conteúdo                                    |
