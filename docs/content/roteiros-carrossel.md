@@ -98,6 +98,15 @@ existir e for verdadeiro. Não preencher com estimativa.
    começar a tratar como parte do trabalho — é o que mais move o alcance."
 5. CTA: "QUAL DESSAS VOCÊ AINDA NÃO FAZ?" — "Comenta aqui e segue @lucasdireitoo pra mais."
 
+**Legenda do post:**
+
+"Mudei 3 coisas no meu processo de criar conteúdo. Nenhuma foi complicada — mas juntas mudaram o
+resultado inteiro.
+
+Arrasta pra ver quais foram, e comenta qual dessas você ainda não aplica no seu perfil.
+
+Salva esse carrossel — você vai querer revisar isso quando bater a preguiça de manter o ritmo."
+
 ## Regras fixas
 
 - Substituir sempre "página" → "perfil" no texto final das artes.
