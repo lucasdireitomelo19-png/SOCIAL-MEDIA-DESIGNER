@@ -58,26 +58,43 @@ só replicar essa capa nos slides de erro/resumo/CTA que já estavam prontos em 
 
 ## Roteiro C — Pergunta/engajamento direto (4 slides)
 
-1. Capa: pergunta direta, ex. "Qual sua maior dificuldade pra crescer o perfil hoje?"
-2. Contexto: por que essa dificuldade é comum
-3. Dica rápida relacionada
-4. CTA: "Responde nos comentários" + "Segue @lucasdireitoo"
+**Copy final:**
 
-## Roteiro D — Prova social / resultado (4–5 slides)
+1. Capa: "QUAL SUA MAIOR DIFICULDADE PRA CRESCER O PERFIL HOJE?"
+2. Contexto: "TRAVA MAIS COMUM" — "Não é falta de talento. É não saber o que postar toda semana —
+   aí trava, adia, e o perfil para no tempo."
+3. Dica rápida: "FIXA 3 TEMAS" — "Escolhe 3 assuntos que você domina e alterna entre eles.
+   Acaba a trava na hora de gravar ou escrever."
+4. CTA: "RESPONDE NOS COMENTÁRIOS QUAL É A SUA" — "Te ajudo a destravar isso. Segue
+   @lucasdireitoo pra mais."
 
-1. Capa: número/resultado em destaque, ex. "+X seguidores em Y dias"
-2. Como: estratégia usada (resumo)
-3. Passo prático que qualquer perfil pode aplicar
-4. (opcional) Prova/detalhe extra
-5. CTA: "Quer isso pro seu perfil? Segue e ativa o sininho"
+## Roteiro D — Prova social / resultado (5 slides)
+
+**Copy final** — ⚠️ trava proposital no campo `[RESULTADO REAL]`: só postar quando esse número
+existir e for verdadeiro. Não preencher com estimativa.
+
+1. Capa: "[RESULTADO REAL, ex.: +250 SEGUIDORES EM 30 DIAS]"
+2. Como: "O QUE MUDOU" — "Parei de postar aleatório e passei a ter ritmo fixo — mesmo dia,
+   mesmo padrão, toda semana."
+3. Passo prático: "REPLICA ISSO" — "Escolhe 1 dia fixo pra carrossel educativo e não pula.
+   O algoritmo aprende a entregar quando você é previsível."
+4. Prova/detalhe extra: "NÃO FOI DA NOITE PRO DIA" — "Levou [X semanas/meses] de posts
+   consistentes até o alcance começar a responder."
+5. CTA: "QUER ISSO PRO SEU PERFIL?" — "Segue @lucasdireitoo e ativa o sininho pra acompanhar
+   o processo."
 
 ## Roteiro E — "Decisões que mudaram o processo" (5 slides)
 
-1. Capa: "N decisões que mudaram meu processo criativo"
-2. Decisão 1: o que mudou + por quê
-3. Decisão 2: o que mudou + por quê
-4. Decisão 3: o que mudou + por quê
-5. CTA: reforço + "Segue @lucasdireitoo"
+**Copy final:**
+
+1. Capa: "3 DECISÕES QUE MUDARAM MEU PROCESSO CRIATIVO"
+2. Decisão 1: **PARAR DE IMPROVISAR** — "Trocar 'vou gravar e ver o que sai' por roteiro
+   escrito antes. Corta o vídeo pela metade e dobra a clareza."
+3. Decisão 2: **TER RITMO FIXO** — "Definir dia certo pra cada formato em vez de postar só
+   quando 'dá vontade'. É isso que treina o algoritmo a te entregar."
+4. Decisão 3: **RESPONDER TODO COMENTÁRIO** — "Parar de tratar comentário como extra e
+   começar a tratar como parte do trabalho — é o que mais move o alcance."
+5. CTA: "QUAL DESSAS VOCÊ AINDA NÃO FAZ?" — "Comenta aqui e segue @lucasdireitoo pra mais."
 
 ## Regras fixas
 
