@@ -22,10 +22,10 @@ aponta pro roteiro específico já escrito — é só abrir o arquivo referencia
 
 ## Pendências antes de postar os carrosséis
 
-- **Dia 4 (Dicas)**: arte no Canva (`DAHSAr-4xbs`) precisa do eyebrow `@lucasdireitoo` adicionado
-  — ainda não foi corrigido.
-- **Dia 11 (Erros)**: capa corrigida existe (`DAHSAlnFIkQ`), falta replicar o mesmo padrão de
-  eyebrow nos slides de conteúdo que já estão prontos em `DAHSAqKQ_uQ`.
+- **Dia 4 (Dicas)**: ✅ resolvido — arte completa e revisada em `DAHSAr-4xbs`.
+- **Dia 11 (Erros)**: só a capa existe (`DAHSK4xIHEk`). Os 5 slides de conteúdo precisam ser
+  montados manualmente no Canva a partir do briefing em `roteiros-carrossel.md` ("Briefing de
+  design — carrossel de Erros") — eu não monto mais arte, só roteiro e briefing.
 
 ## Depois do dia 14
 

@@ -53,8 +53,10 @@ antes de postar.
 5. Resumo rápido: "RESUMO RÁPIDO" — → Sem CTA / → Sem resposta / → Sem padrão visual
 6. CTA: "QUAL DESSES VOCÊ JÁ FEZ?" — "Comenta aqui embaixo e segue @lucasdireitoo"
 
-Arte já existe no Canva com capa corrigida (eyebrow + 5 itens), ver `DAHSAlnFIkQ` abaixo — falta
-só replicar essa capa nos slides de erro/resumo/CTA que já estavam prontos em `DAHSAqKQ_uQ`.
+Só a capa existe no Canva (`DAHSK4xIHEk` — https://www.canva.com/d/wBF8SosOgQ2YaC4), aguardando
+aprovação. Os 5 slides de conteúdo (Erro 1/2/3/Resumo/CTA) nunca foram feitos — briefing completo
+na seção "Briefing de design — carrossel de Erros" abaixo. A partir de agora as artes não são mais
+montadas por mim: o briefing é o entregável, a execução no Canva é manual.
 
 ## Roteiro C — Pergunta/engajamento direto (4 slides)
 
@@ -103,28 +105,67 @@ existir e for verdadeiro. Não preencher com estimativa.
 
 ## Design das artes — linha ativa
 
+A partir de agora eu só entrego roteiro + briefing de design. A execução no Canva (montar a arte,
+duplicar slide, ajustar texto) é feita direto por você ou por quem for produzir.
+
 Layout base: fundo sólido azul-petróleo `#0B1E2E`, headline bold condensado (Anton) centralizado
 misturando duas cores — texto principal em off-white `#F8E8C5`/`#EDEDE9` e a palavra-chave em
 laranja `#E14D24`/`#F4A259` — com legenda de apoio em Poppins abaixo. Slides de lista usam bullet
-com seta (→). Inspirado no layout da Vitória Zuntini, recolorido pra paleta da marca.
+com seta (→) ou triângulo laranja. Inspirado no layout da Vitória Zuntini, recolorido pra paleta
+da marca.
 
-Carrosséis prontos:
-- Roteiro B "3 erros que travam seu perfil" (6 slides, estilo Vitória Zuntini — fundo sólido escuro):
-  design `DAHSAqKQ_uQ` — https://www.canva.com/design/DAHSAqKQ_uQ/edit
-- Roteiro A "3 dicas pra crescer seu perfil" (5 slides, estilo Jessi Lima — fundo claro texturizado
-  `#EDEDE9`, headline dividido em 3 blocos de texto com cores alternadas laranja/azul-marinho,
-  parágrafo de apoio no topo, "ARRASTA PRA VER MAIS" no rodapé): design `DAHSAr-4xbs` —
+Carrosséis já montados (referência visual):
+- Roteiro A "3 dicas pra crescer seu perfil" (5 slides, completo, estilo Jessi Lima — fundo claro
+  texturizado `#EDEDE9`, headline dividido em 3 blocos de texto com cores alternadas
+  laranja/azul-marinho, parágrafo de apoio no topo, "ARRASTA PRA VER MAIS" no rodapé, eyebrow
+  `@LUCASDIREITOO · SOCIAL MEDIA GROWTH` no topo de toda página): design `DAHSAr-4xbs` —
   https://www.canva.com/design/DAHSAr-4xbs/edit
+- Roteiro B "3 erros que travam seu perfil" — **só a capa** está pronta: design `DAHSK4xIHEk` —
+  https://www.canva.com/d/wBF8SosOgQ2YaC4
 
 Referências ainda não aplicadas: Carol Ferreira (foto + marcador/handwriting), Josi Muniz (foto +
 caixa pontilhada), Mariana Guimarães (foto + palavra itálica de destaque) — ver
 `docs/brand/identidade-visual.md`.
 
-Observação técnica: pra editar o texto de um design gerado por IA sem quebrar a formatação
-(cores por trecho, fonte), usar `find_and_replace_text` element por element_id (troca o texto de
-uma região específica preservando a cor/fonte dela) em vez de `replace_text` (que substitui todo o
-elemento e colapsa pra uma única formatação) — só usar `replace_text` quando o elemento já é
-single-region (como no template da Jessi Lima, onde cada trecho é um elemento de texto separado).
-Pra montar o carrossel: duplicar a página-base N vezes com `merge-designs` (`insert_pages`), depois
-editar o texto de cada página. Se uma palavra grande ficar larga demais e quebrar linha, reduzir o
-`font_size` daquele elemento em ~15-20%.
+## Briefing de design — carrossel de Erros (slides 2 a 6)
+
+A capa (slide 1, `DAHSK4xIHEk`) já define o padrão visual: fundo navy `#0B1E2E`, eyebrow em
+pílula off-white no topo (`@LUCASDIREITOO · SOCIAL MEDIA GROWTH`, texto navy bold centralizado),
+headline Anton bold off-white `#F0E7D9`, acentos em laranja `#F4A259`. Os slides 2-6 seguem o
+mesmo padrão de fundo/eyebrow/fonte, mudando só o conteúdo central — igual ao carrossel de Dicas
+(cada slide = uma palavra-chave grande + subtítulo + legenda de apoio).
+
+**Slide 2 — ERRO 1:**
+- Eyebrow (igual capa, topo)
+- "ERRO 1:" em laranja, Anton bold, ~100px
+- "SEM CTA" em off-white, Anton bold, ~120px, logo abaixo
+- Legenda de apoio, Poppins, menor, cor cinza-azulado `#7F8597`: "Postar sem chamada pra ação
+  deixa quem viu sem saber o que fazer."
+
+**Slide 3 — ERRO 2:**
+- Eyebrow (igual capa)
+- "ERRO 2:" laranja / "SEM RESPOSTA" off-white (mesmo padrão do slide 2)
+- Legenda: "Ignorar comentários derruba o alcance do post no algoritmo."
+
+**Slide 4 — ERRO 3:**
+- Eyebrow (igual capa)
+- "ERRO 3:" laranja / "SEM PADRÃO" off-white
+- Legenda: "Postar sem identidade visual confunde quem chega no seu perfil."
+
+**Slide 5 — Resumo:**
+- Eyebrow (igual capa)
+- "RESUMO RÁPIDO" em off-white, Anton bold, centralizado, tamanho médio (menor que os slides de
+  erro individual, pra caber a lista abaixo)
+- Lista com bullet triângulo laranja (mesmo estilo da capa): "Sem CTA" / "Sem resposta" / "Sem
+  padrão visual"
+
+**Slide 6 — CTA:**
+- Eyebrow (igual capa)
+- "QUAL DESSES VOCÊ JÁ FEZ?" em off-white, Anton bold
+- Legenda: "Comenta aqui embaixo e segue @lucasdireitoo"
+
+Observação técnica pra quem for montar no Canva: duplicar a página da capa 5 vezes (mantém fundo +
+eyebrow prontos), depois só trocar o conteúdo central de cada página pelo texto acima. Se usar
+geração por IA pra criar as páginas do zero, sempre gerar já com o texto final em português (não
+com placeholder pra substituir depois) — substituição de texto depois de gerado tende a quebrar
+alinhamento/sobreposição.
