@@ -1,33 +1,47 @@
 # Calendário Editorial — @lucasdireitoo
 
-Planejamento de conteúdo para crescimento da página. Ajustar frequência e pilares conforme performance.
+Planejamento real de conteúdo, baseado no que o @lucasdireitoo já está praticando (não hipótese —
+ritmo iniciado em [data do primeiro post duplo, ver nota de checkpoint abaixo]).
 
 ## Pilares de conteúdo
 
-1. **Dicas rápidas de growth** — ações práticas para crescer seguidores/engajamento.
-2. **Erros comuns** — o que não fazer ao gerenciar uma página.
-3. **Bastidores/estratégia** — como o próprio @lucasdireitoo pensa o crescimento (autoridade).
-4. **Engajamento direto** — perguntas, enquetes, provocações para comentários.
-5. **Prova social / resultados** — números, cases, antes-depois (sem fotos — usar dados e texto).
+1. **Rotina/Meme** (diário) — humor relatable sobre os bastidores de quem cria conteúdo/social
+   media. Funciona melhor quando tem uma virada de aprendizado por trás (ex.: "e foi assim que eu
+   aprendi X"), não só desabafo. Puro desabafo cansa rápido e não ensina nada pro seguidor.
+2. **Falado / Talking head** (diário) — vídeo curto, gravado direto pra câmera, gancho forte nos
+   primeiros segundos, ensina uma coisa específica e prática. Ex.: "como perder a vergonha de
+   gravar vídeo".
+3. **Carrossel educativo** (1x/semana, quarta-feira) — conteúdo mais denso, produção mais
+   trabalhosa (ver `docs/content/roteiros-carrossel.md` pros roteiros). Ex.: o que é gancho, dicas
+   de growth, erros comuns.
+4. **Lifestyle Reels** (domingo) — liberdade de trabalhar pela internet, tom mais pessoal e
+   aspiracional. Ex.: "Liberdade Digital".
 
-## Estrutura semanal sugerida
+## Estrutura semanal
 
-| Dia       | Formato      | Pilar                          |
-|-----------|--------------|----------------------------------|
-| Segunda   | Feed (post)  | Dica rápida de growth            |
-| Terça     | Story/Reels  | Bastidores / estratégia          |
-| Quarta    | Carrossel    | Erro comum (passo a passo)       |
-| Quinta    | Feed (post)  | Engajamento direto (pergunta)    |
-| Sexta     | Story/Reels  | Dica rápida de growth            |
-| Sábado    | Carrossel    | Prova social / resultados        |
-| Domingo   | —            | Descanso / repost de destaque    |
+| Dia       | Conteúdo                                    |
+|-----------|----------------------------------------------|
+| Segunda   | Meme/Rotina + Falado                          |
+| Terça     | Meme/Rotina + Falado                          |
+| Quarta    | Meme/Rotina + Falado + **Carrossel educativo** |
+| Quinta    | Meme/Rotina + Falado                          |
+| Sexta     | Meme/Rotina + Falado                          |
+| Sábado    | Meme/Rotina + Falado                          |
+| Domingo   | Meme/Rotina + Falado + **Lifestyle Reels**    |
+
+## Checkpoint de sustentabilidade
+
+O ritmo diário (meme + falado) começou junto com o primeiro carrossel publicado. Ainda não foi
+testado por um período — a confiança de manter é intenção, não dado. **Reavaliar em 2 semanas**
+com números reais do Insights: se a cadência dupla diária estiver gerando queda de qualidade
+(retenção, taxa de comentário) ou não for sustentada na prática, cortar pra 1 formato/dia antes de
+cortar de vez.
 
 ## Banco de pautas
 
 > Adicionar aqui ideias conforme surgirem. Formato: `- [pilar] título curto — nota`
 
-- [ ] [Dica rápida] 3 horários que mais engajam — testar e validar com dados próprios
-- [ ] [Erro comum] Postar sem CTA — mostrar antes/depois de resultado
-- [ ] [Bastidores] Como decido o que postar essa semana
-- [ ] [Engajamento] "Qual sua maior dificuldade pra crescer no Instagram hoje?"
-- [ ] [Prova social] Crescimento em X dias usando Y estratégia
+- [x] [Meme] "Eu olhando pro carrossel depois de esgotar toda criatividade só na capa" — postado
+- [x] [Falado] "Como perder a vergonha de gravar vídeo" — postado
+- [x] [Carrossel] "O que é gancho" — postado
+- [ ] [Lifestyle] Liberdade Digital — reels de rotina trabalhando pela internet
