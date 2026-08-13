@@ -29,6 +29,14 @@ Mesma linha do carrossel, só que em vídeo rápido — uma dica, um erro, um co
   ação — quem vê não sabe o que fazer. Terceiro: ignorar quem comenta, e isso derruba seu alcance."
 - CTA: "Comenta aqui qual desses você já fez."
 
+**Roteiro 1.3 — "Postar sem estratégia"**
+- Gancho: "Você tá postando todo dia e não sai do lugar? Talvez o problema não seja frequência."
+- Promessa: "Te mostro o que realmente falta."
+- Conteúdo: "Não adianta postar todo dia se cada post fala de uma coisa diferente pra um público
+  diferente. Escolhe um pilar de conteúdo, repete, e deixa o algoritmo entender pra quem indicar
+  seu perfil."
+- CTA: "Segue pra mais dicas assim."
+
 **Roteiro 1.2 — "O que é gancho"**
 - Gancho: "Você tem 3 segundos pra prender alguém no seu conteúdo. Só isso."
 - Promessa: "Em menos de 1 minuto eu te explico o que é gancho de verdade."
@@ -70,6 +78,13 @@ Posição direta sobre algo do nicho, gera discordância/comentário.
   depois. Frequência sem direção é volume, não é crescimento."
 - CTA: "Segue aqui se quer aprender a fazer isso com direção."
 
+**Roteiro 3.3 — "Seguidor não paga boleto"**
+- Gancho: "Seguidor não paga boleto — e é hora de alguém falar isso."
+- Promessa: "Deixa eu te explicar o que realmente importa."
+- Conteúdo: "Ter muito seguidor sem engajamento e sem conversão é vaidade, não resultado. Prefiro
+  1000 seguidores que compram e comentam do que 100 mil que só passam o dedo."
+- CTA: "Comenta se você já caiu nessa armadilha de focar só em número."
+
 ### 4. Bastidores pessoais
 Rotina, processo, dificuldades reais de quem cria conteúdo (conecta com o pilar Meme/Rotina).
 
@@ -87,6 +102,14 @@ Rotina, processo, dificuldades reais de quem cria conteúdo (conecta com o pilar
   amanhã. O que muda é gravar mesmo assim — nem que saia simples. Postar imperfeito ainda é
   melhor que não postar."
 - CTA: "Segue pra acompanhar os bastidores de verdade, não só o resultado."
+
+**Roteiro 4.3 — "Quantos posts eu apago antes de publicar um"**
+- Gancho: "Pra cada post que eu publico, tem pelo menos 2 que eu apaguei."
+- Promessa: "Bastidor real do que ninguém mostra."
+- Conteúdo: "Gravo, não gosto, apago. Escrevo legenda, reescrevo, apago de novo. Isso não é
+  perfeccionismo à toa — é filtro de qualidade. Mas também aprendi que às vezes o 'bom o
+  suficiente' merece ir ao ar."
+- CTA: "Comenta se você também trava tentando deixar perfeito."
 
 ### 5. Resposta a pergunta/comentário
 Responde algo que um seguidor perguntou — gera senso de proximidade e prova que o perfil interage.
@@ -106,6 +129,14 @@ Responde algo que um seguidor perguntou — gera senso de proximidade e prova qu
   gerar confiança. Se você tem a opção de aparecer, mesmo que travado no início, isso acelera
   tudo."
 - CTA: "Comenta sua dúvida que pode virar o próximo vídeo."
+
+**Roteiro 5.3 — "Quantos seguidores preciso pra monetizar"**
+- Gancho: "'Quantos seguidores eu preciso pra começar a ganhar dinheiro?' Pergunta errada."
+- Promessa: "A pergunta certa é outra."
+- Conteúdo: "Número de seguidor sozinho não paga nada. O que importa é ter uma audiência que
+  confia em você e um produto ou serviço que resolve o problema dela. Prefira 500 seguidores
+  engajados a 50 mil perfil fantasma."
+- CTA: "Manda sua pergunta que pode virar o próximo vídeo."
 
 ## Teste de segmento — registro de resultado
 

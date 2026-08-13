@@ -17,6 +17,21 @@ nos textos das artes.
 4. Dica 3: título curto + 1 frase de explicação
 5. CTA: "Salva esse post e testa hoje" + "Segue @lucasdireitoo pra mais"
 
+**Copy final — agendado pra quarta da semana 1:**
+
+1. Capa: "3 DICAS PRA CRESCER SEU PERFIL"
+2. DICA 1: **RITMO** / toda semana — "Ter ritmo de postagem treina o algoritmo a entregar seu
+   conteúdo."
+3. DICA 2: **HASHTAG** / as certas — "Hashtag errada afasta o público certo. Pesquise as
+   relevantes pro seu nicho."
+4. DICA 3: **RESPONDA** / quem comenta — "Responder comentários aumenta o alcance do post no
+   algoritmo."
+5. CTA: "GOSTOU? SALVA e segue já" — "Se esse conteúdo te ajudou, salva pra não perder."
+
+Arte já existe no Canva (`DAHSAr-4xbs`, ver link abaixo), **mas falta o eyebrow de crédito**
+(`@lucasdireitoo`) igual foi adicionado no carrossel B — não tinha sido corrigido ainda. Fazer
+antes de postar.
+
 ## Roteiro B — "N erros que travam seu perfil" (5–7 slides)
 
 1. Capa: "3 ERROS QUE TRAVAM SEU PERFIL"
@@ -26,6 +41,20 @@ nos textos das artes.
 5. (opcional) Erro 4 / Erro 5
 6. Resumo rápido dos erros (bullet curto)
 7. CTA: "Qual desses você já fez? Comenta aqui"
+
+**Copy final — agendado pra quarta da semana 2:**
+
+1. Capa: "OS ERRINHOS (COM AMOR, MAS VOU FALAR):" + lista completa — "Feed sem padrão nenhum" /
+   "Capa de destaque cada uma de um jeito" / "Foto borrada ou mal cortada" / "Excesso de informação
+   no post" / "Cor que não conversa com nada." (com eyebrow `@lucasdireitoo` · `Social Media`)
+2. ERRO 1: **SEM CTA** — "Postar sem chamada pra ação deixa quem viu sem saber o que fazer."
+3. ERRO 2: **SEM RESPOSTA** — "Ignorar comentários derruba o alcance do post no algoritmo."
+4. ERRO 3: **SEM PADRÃO** — "Postar sem identidade visual confunde quem chega no seu perfil."
+5. Resumo rápido: "RESUMO RÁPIDO" — → Sem CTA / → Sem resposta / → Sem padrão visual
+6. CTA: "QUAL DESSES VOCÊ JÁ FEZ?" — "Comenta aqui embaixo e segue @lucasdireitoo"
+
+Arte já existe no Canva com capa corrigida (eyebrow + 5 itens), ver `DAHSAlnFIkQ` abaixo — falta
+só replicar essa capa nos slides de erro/resumo/CTA que já estavam prontos em `DAHSAqKQ_uQ`.
 
 ## Roteiro C — Pergunta/engajamento direto (4 slides)
 
