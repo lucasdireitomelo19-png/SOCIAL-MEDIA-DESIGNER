@@ -9,8 +9,8 @@ import { revalidatePath } from "next/cache";
 import { verifyAdminSession } from "@/lib/auth/dal";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/format";
+import { UPLOAD_DIR } from "@/lib/upload-dir";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -45,8 +45,8 @@ async function saveUploadedImages(files: File[]) {
     const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
     const filename = `${randomUUID()}.${extension}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await writeFile(path.join(UPLOAD_DIR, filename), buffer);
-    saved.push(`/uploads/${filename}`);
+    await writeFile(path.join(/* turbopackIgnore: true */ UPLOAD_DIR, filename), buffer);
+    saved.push(`/api/uploads/${filename}`);
   }
   return saved;
 }
@@ -194,8 +194,9 @@ export async function deleteProduct(productId: string) {
   await prisma.product.delete({ where: { id: productId } });
 
   for (const image of images) {
-    if (image.url.startsWith("/uploads/")) {
-      await unlink(path.join(process.cwd(), "public", image.url)).catch(() => {});
+    if (image.url.startsWith("/api/uploads/")) {
+      const filename = image.url.replace("/api/uploads/", "");
+      await unlink(path.join(/* turbopackIgnore: true */ UPLOAD_DIR, filename)).catch(() => {});
     }
   }
 

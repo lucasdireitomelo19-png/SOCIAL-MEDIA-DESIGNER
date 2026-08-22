@@ -1,6 +1,9 @@
 import LoginForm from "./login-form";
 import { siteConfig } from "@/lib/site-config";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-brand-dark px-4">

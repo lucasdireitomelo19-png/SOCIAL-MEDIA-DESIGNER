@@ -66,10 +66,11 @@ automaticamente depois de 30 minutos se o pagamento não for concluído (carrinh
 - **Pedidos**: lista de pedidos com status, e uma tela de detalhe para atualizar o status
   (aguardando pagamento → pago → enviado → entregue, ou cancelado).
 
-Fotos enviadas pelo admin são salvas em `public/uploads/`. **Isso funciona bem em um servidor
-tradicional (Docker, VPS), mas não persiste em plataformas serverless como a Vercel** — nesse caso,
-o próximo passo natural é trocar esse upload local por um serviço como Cloudinary, S3 ou Vercel
-Blob (ver "Indo para produção").
+Fotos enviadas pelo admin são salvas em disco e servidas pela rota `/api/uploads/[arquivo]`. Por
+padrão isso é `public/uploads/`, mas o caminho é configurável pela variável `UPLOAD_DIR` — em
+produção, aponte para um diretório dentro de um **volume persistente** (ex: Railway) para que as
+fotos sobrevivam a redeploys. Em plataformas serverless sem disco persistente (ex: Vercel), troque
+por um serviço como Cloudinary, S3 ou Vercel Blob (ver "Indo para produção").
 
 ## Estrutura do projeto
 

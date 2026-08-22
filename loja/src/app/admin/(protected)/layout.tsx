@@ -1,6 +1,10 @@
 import { verifyAdminSession } from "@/lib/auth/dal";
 import AdminSidebar from "@/components/admin/sidebar";
 
+// Painel logado: nunca deve ser pré-renderizado/cacheado (sessão e dados mudam por request).
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await verifyAdminSession();
 
