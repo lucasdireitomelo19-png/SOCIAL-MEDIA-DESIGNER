@@ -4,6 +4,7 @@ import * as z from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getPreferenceClient, isMercadoPagoConfigured } from "@/lib/mercadopago";
+import { getSiteUrl } from "@/lib/site-url";
 
 const checkoutSchema = z.object({
   customerName: z.string().trim().min(2, { error: "Informe seu nome completo." }),
@@ -90,7 +91,7 @@ export async function createOrder(
     return created;
   });
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = getSiteUrl();
 
   if (!isMercadoPagoConfigured()) {
     redirect(`/pedido/pendente?order=${order.id}&mp=off`);

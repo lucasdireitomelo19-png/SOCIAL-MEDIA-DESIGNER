@@ -41,8 +41,8 @@ async function saveUploadedImages(files: File[]) {
     const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
     const filename = `${randomUUID()}.${extension}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await saveUpload(filename, buffer, file.type);
-    saved.push(`/api/uploads/${filename}`);
+    const url = await saveUpload(filename, buffer, file.type);
+    saved.push(url);
   }
   return saved;
 }
@@ -190,10 +190,10 @@ export async function deleteProduct(productId: string) {
   await prisma.product.delete({ where: { id: productId } });
 
   for (const image of images) {
-    if (image.url.startsWith("/api/uploads/")) {
-      const filename = image.url.replace("/api/uploads/", "");
-      await deleteUpload(filename).catch(() => {});
-    }
+    // Fotos de exemplo do seed (/placeholders/...) são arquivos estáticos do repositório,
+    // não uploads — não têm o que apagar do storage.
+    if (image.url.startsWith("/placeholders/")) continue;
+    await deleteUpload(image.url).catch(() => {});
   }
 
   revalidatePath("/admin/produtos");

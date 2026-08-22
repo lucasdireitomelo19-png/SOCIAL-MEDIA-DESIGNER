@@ -70,14 +70,17 @@ automaticamente depois de 30 minutos se o pagamento não for concluído (carrinh
 - **Pedidos**: lista de pedidos com status, e uma tela de detalhe para atualizar o status
   (aguardando pagamento → pago → enviado → entregue, ou cancelado).
 
-Fotos enviadas pelo admin são servidas pela rota `/api/uploads/[arquivo]`, que escolhe automaticamente
-onde guardar o arquivo:
+Fotos enviadas pelo admin escolhem automaticamente onde guardar o arquivo, dependendo de onde o
+app está rodando:
 
-- **Rodando no Netlify**: usa [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/)
-  automaticamente — nenhuma configuração extra é necessária, e funciona mesmo sem disco persistente.
+- **Na Vercel**: usa [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) — a foto fica numa
+  URL própria da CDN deles. Nenhuma configuração extra é necessária.
+- **No Netlify**: usa [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/),
+  servida pela rota `/api/uploads/[arquivo]`. Também automático.
 - **Em qualquer outro lugar** (local, Railway, Docker, VPS): salva em disco, por padrão em
-  `public/uploads/`. Se o host tiver um volume persistente (ex: Railway), aponte a variável
-  `UPLOAD_DIR` para um caminho dentro dele, assim as fotos sobrevivem a redeploys.
+  `public/uploads/`, também servida por `/api/uploads/[arquivo]`. Se o host tiver um volume
+  persistente (ex: Railway), aponte a variável `UPLOAD_DIR` para um caminho dentro dele, assim as
+  fotos sobrevivem a redeploys.
 
 ## Estrutura do projeto
 
@@ -100,40 +103,40 @@ prisma/
 
 ## Indo para produção
 
-O projeto foi construído para ser portável, mas o caminho mais simples (uma conta só, sem
-configurar banco/storage externos separadamente) é publicar no **Netlify**:
+O projeto foi construído para ser portável — roda em qualquer host Node.js/Postgres. O caminho
+mais rápido é publicar na **Vercel** com o botão abaixo.
 
-### Deploy no Netlify
+### Deploy na Vercel (mais rápido)
 
-1. Acesse [netlify.com](https://netlify.com) e conecte sua conta GitHub.
-2. **Add new site** → **Import an existing project** → selecione o repositório
-   `SOCIAL-MEDIA-DESIGNER`.
-3. Em **Base directory**, coloque `loja` (o app Next.js fica dentro dessa pasta do repositório).
-   O `netlify.toml` já configurado nessa pasta cuida do build (`@netlify/plugin-nextjs`).
-4. Antes do primeiro deploy (ou depois, em **Site configuration → Environment variables**),
-   defina:
-   - `SESSION_SECRET` — gere com `openssl rand -base64 32`
-   - `NEXT_PUBLIC_SITE_URL` — a URL que o Netlify vai te dar (ex: `https://seu-site.netlify.app`);
-     dá pra ajustar depois do primeiro deploy quando você souber a URL final
-   - Opcional: `MERCADOPAGO_ACCESS_TOKEN` e `NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY` para pagamento real
-5. **Banco de dados**: no dashboard do site, vá em **Extensions** (ou **Integrations**) → ative o
-   **Netlify DB**. Ele provisiona um Postgres (Neon) e injeta a variável `NETLIFY_DATABASE_URL`
-   automaticamente — o app já sabe usar essa variável, nenhuma configuração extra é necessária.
-6. **Fotos dos produtos**: não precisa fazer nada — o app detecta que está no Netlify e usa o
-   Netlify Blobs automaticamente.
-7. Depois do primeiro deploy, rode as migrations e o seed contra o banco de produção. O jeito mais
-   simples é rodar localmente apontando para a `NETLIFY_DATABASE_URL` (copie o valor do dashboard
-   do Netlify para o seu `.env` local temporariamente):
-   ```bash
-   DATABASE_URL="<a NETLIFY_DATABASE_URL copiada>" npx prisma migrate deploy
-   DATABASE_URL="<a NETLIFY_DATABASE_URL copiada>" npm run db:seed
-   ```
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flucasdireitomelo19-png%2Frenove-brecho&env=SESSION_SECRET%2CDATABASE_URL&envDescription=SESSION_SECRET%3A+gere+com+openssl+rand+-base64+32.+DATABASE_URL%3A+connection+string+de+um+banco+Postgres+%28veja+abaixo+como+criar+um+gr%C3%A1tis%29.&envLink=https%3A%2F%2Fgithub.com%2Flucasdireitomelo19-png%2Frenove-brecho%23readme&project-name=renove-brecho&repository-name=renove-brecho)
+
+Antes de clicar, crie um banco Postgres gratuito (leva ~1 minuto, não precisa cartão):
+
+1. Acesse [neon.tech](https://neon.tech) → crie uma conta (dá pra entrar com GitHub) → crie um
+   projeto/banco novo.
+2. Copie a **connection string** que ele mostra (começa com `postgresql://...`).
+
+Agora clique no botão **"Deploy with Vercel"** acima:
+
+3. Conecte sua conta GitHub (se for a primeira vez).
+4. Na tela de configuração, a Vercel vai pedir os valores de duas variáveis:
+   - `SESSION_SECRET` → gere com `openssl rand -base64 32` (ou qualquer texto aleatório longo)
+   - `DATABASE_URL` → cole a connection string do Neon que você copiou
+5. Clique em **Deploy**. As migrations e o seed do banco rodam automaticamente durante o build
+   (configurado no `vercel.json`) — não precisa rodar nenhum comando à parte.
+6. Fotos de produto: também automático — o app detecta que está na Vercel e usa o **Vercel Blob**
+   (é ativado sozinho na primeira vez que uma foto é enviada; se pedir para "criar um Blob store",
+   aceite).
+7. A URL pública do site (`NEXT_PUBLIC_SITE_URL`) também é resolvida automaticamente pela Vercel —
+   só defina essa variável manualmente se quiser usar um domínio próprio.
 
 ### Outras opções de hospedagem
 
-O app também roda em qualquer ambiente Node.js tradicional (Railway, Fly.io, VPS com Docker, etc) —
-nesse caso, use um Postgres qualquer (o do próprio provedor, ou Neon/Supabase) e, se o host tiver
-disco persistente, aponte `UPLOAD_DIR` para dentro dele (veja "Painel administrativo" acima).
+O app também roda em qualquer ambiente Node.js tradicional (Railway, Netlify, Fly.io, VPS com
+Docker, etc) — nesse caso, use um Postgres qualquer (o do próprio provedor, ou Neon/Supabase) e,
+se o host tiver disco persistente, aponte `UPLOAD_DIR` para dentro dele (veja "Painel
+administrativo" acima). O repositório já inclui `railway.json` e `netlify.toml` configurados para
+essas plataformas, caso prefira usá-las.
 
 - **Domínio e variáveis de ambiente**: atualize `NEXT_PUBLIC_SITE_URL` para a URL final do site —
   ela é usada nas URLs de retorno do Mercado Pago.
