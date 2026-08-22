@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1c1c1a;
+
+  --color-brand-dark: #1c1c1a;
+  --color-brand-bg: #faf8f5;
+  --color-brand-accent: #d1522f;
+  --color-brand-accent-dark: #b8431f;
+  --color-brand-muted: #8a8580;
+  --color-brand-line: #e7e2db;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-dark: var(--color-brand-dark);
+  --color-brand-bg: var(--color-brand-bg);
+  --color-brand-accent: var(--color-brand-accent);
+  --color-brand-accent-dark: var(--color-brand-accent-dark);
+  --color-brand-muted: var(--color-brand-muted);
+  --color-brand-line: var(--color-brand-line);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.field {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-brand-line);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background: white;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--color-brand-accent);
+  box-shadow: 0 0 0 1px var(--color-brand-accent);
+}

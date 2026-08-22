@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#e6dccb"/>
+  <g fill="#1c1c1a" opacity="0.35" font-family="Georgia, serif">
+    <text x="400" y="500" text-anchor="middle" font-size="42">Saia</text>
+    <text x="400" y="545" text-anchor="middle" font-size="16" letter-spacing="2">FOTO DA PECA</text>
+  </g>
+</svg>
