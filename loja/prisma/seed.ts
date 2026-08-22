@@ -1,8 +1,12 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL ?? "file:./dev.db" });
+const connectionString = process.env.DATABASE_URL ?? process.env.NETLIFY_DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL não definido nas variáveis de ambiente.");
+}
+const adapter = new PrismaPg(connectionString);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {

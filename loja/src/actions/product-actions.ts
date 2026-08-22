@@ -2,14 +2,12 @@
 
 import * as z from "zod";
 import { randomUUID } from "crypto";
-import { mkdir, writeFile, unlink } from "fs/promises";
-import path from "path";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { verifyAdminSession } from "@/lib/auth/dal";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/format";
-import { UPLOAD_DIR } from "@/lib/upload-dir";
+import { saveUpload, deleteUpload } from "@/lib/storage";
 
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
@@ -32,8 +30,6 @@ async function saveUploadedImages(files: File[]) {
   const validFiles = files.filter((file) => file instanceof File && file.size > 0);
   if (validFiles.length === 0) return [];
 
-  await mkdir(UPLOAD_DIR, { recursive: true });
-
   const saved: string[] = [];
   for (const file of validFiles) {
     if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
@@ -45,7 +41,7 @@ async function saveUploadedImages(files: File[]) {
     const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
     const filename = `${randomUUID()}.${extension}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await writeFile(path.join(/* turbopackIgnore: true */ UPLOAD_DIR, filename), buffer);
+    await saveUpload(filename, buffer, file.type);
     saved.push(`/api/uploads/${filename}`);
   }
   return saved;
@@ -196,7 +192,7 @@ export async function deleteProduct(productId: string) {
   for (const image of images) {
     if (image.url.startsWith("/api/uploads/")) {
       const filename = image.url.replace("/api/uploads/", "");
-      await unlink(path.join(/* turbopackIgnore: true */ UPLOAD_DIR, filename)).catch(() => {});
+      await deleteUpload(filename).catch(() => {});
     }
   }
 

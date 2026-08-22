@@ -7,8 +7,8 @@ login (cadastro de peças com fotos, gestão de pedidos e um dashboard com insig
 ## Stack
 
 - **Next.js 16** (App Router) + TypeScript + Tailwind CSS 4
-- **Prisma ORM** com SQLite local (portável — dá pra trocar para um banco hospedado sem mudar o
-  código, veja "Indo para produção" abaixo)
+- **Prisma ORM** com **Postgres** (funciona com qualquer Postgres — local, Netlify DB, Railway,
+  Supabase, etc, veja "Indo para produção" abaixo)
 - **Sessão de admin própria** (cookie assinado com JWT via `jose` + `bcryptjs`), sem depender de
   serviço externo
 - **Mercado Pago** (Checkout Pro) para pagamento via Pix/cartão
@@ -17,10 +17,14 @@ login (cadastro de peças com fotos, gestão de pedidos e um dashboard com insig
 
 ## Rodando localmente
 
+Você precisa de um Postgres rodando (local ou um banco gratuito na nuvem, ex: criar já um banco no
+[Netlify DB](https://docs.netlify.com/build/data-and-storage/netlify-db/) ou no
+[Neon](https://neon.tech) e usar a connection string dele).
+
 ```bash
 npm install
-cp .env.example .env   # preencha SESSION_SECRET (veja abaixo) e, se quiser pagamento real, o Mercado Pago
-npx prisma migrate dev # cria o banco SQLite local
+cp .env.example .env   # preencha DATABASE_URL, SESSION_SECRET (veja abaixo) e, se quiser pagamento real, o Mercado Pago
+npx prisma migrate dev # cria as tabelas no banco
 npm run db:seed        # cria categorias, peças de exemplo e o usuário admin
 npm run dev
 ```
@@ -66,11 +70,14 @@ automaticamente depois de 30 minutos se o pagamento não for concluído (carrinh
 - **Pedidos**: lista de pedidos com status, e uma tela de detalhe para atualizar o status
   (aguardando pagamento → pago → enviado → entregue, ou cancelado).
 
-Fotos enviadas pelo admin são salvas em disco e servidas pela rota `/api/uploads/[arquivo]`. Por
-padrão isso é `public/uploads/`, mas o caminho é configurável pela variável `UPLOAD_DIR` — em
-produção, aponte para um diretório dentro de um **volume persistente** (ex: Railway) para que as
-fotos sobrevivam a redeploys. Em plataformas serverless sem disco persistente (ex: Vercel), troque
-por um serviço como Cloudinary, S3 ou Vercel Blob (ver "Indo para produção").
+Fotos enviadas pelo admin são servidas pela rota `/api/uploads/[arquivo]`, que escolhe automaticamente
+onde guardar o arquivo:
+
+- **Rodando no Netlify**: usa [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/)
+  automaticamente — nenhuma configuração extra é necessária, e funciona mesmo sem disco persistente.
+- **Em qualquer outro lugar** (local, Railway, Docker, VPS): salva em disco, por padrão em
+  `public/uploads/`. Se o host tiver um volume persistente (ex: Railway), aponte a variável
+  `UPLOAD_DIR` para um caminho dentro dele, assim as fotos sobrevivem a redeploys.
 
 ## Estrutura do projeto
 
@@ -93,15 +100,41 @@ prisma/
 
 ## Indo para produção
 
-O projeto foi construído para ser portável — sem travar você em uma hospedagem específica:
+O projeto foi construído para ser portável, mas o caminho mais simples (uma conta só, sem
+configurar banco/storage externos separadamente) é publicar no **Netlify**:
 
-- **Banco de dados**: hoje usa SQLite local (`file:./dev.db`) através de um driver adapter
-  (`@prisma/adapter-libsql`). Para produção, basta apontar `DATABASE_URL` para um banco
-  [Turso](https://turso.tech) (mesmo formato libsql, sem mudar código) ou trocar o adapter do
-  Prisma para Postgres/MySQL se preferir outro provedor.
-- **Hospedagem do site**: qualquer ambiente Node.js funciona (Vercel, Railway, Fly.io, VPS com
-  Docker, etc). Se optar por uma plataforma serverless (Vercel), lembre de resolver o upload de
-  imagens (item acima) antes de ir ao ar.
+### Deploy no Netlify
+
+1. Acesse [netlify.com](https://netlify.com) e conecte sua conta GitHub.
+2. **Add new site** → **Import an existing project** → selecione o repositório
+   `SOCIAL-MEDIA-DESIGNER`.
+3. Em **Base directory**, coloque `loja` (o app Next.js fica dentro dessa pasta do repositório).
+   O `netlify.toml` já configurado nessa pasta cuida do build (`@netlify/plugin-nextjs`).
+4. Antes do primeiro deploy (ou depois, em **Site configuration → Environment variables**),
+   defina:
+   - `SESSION_SECRET` — gere com `openssl rand -base64 32`
+   - `NEXT_PUBLIC_SITE_URL` — a URL que o Netlify vai te dar (ex: `https://seu-site.netlify.app`);
+     dá pra ajustar depois do primeiro deploy quando você souber a URL final
+   - Opcional: `MERCADOPAGO_ACCESS_TOKEN` e `NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY` para pagamento real
+5. **Banco de dados**: no dashboard do site, vá em **Extensions** (ou **Integrations**) → ative o
+   **Netlify DB**. Ele provisiona um Postgres (Neon) e injeta a variável `NETLIFY_DATABASE_URL`
+   automaticamente — o app já sabe usar essa variável, nenhuma configuração extra é necessária.
+6. **Fotos dos produtos**: não precisa fazer nada — o app detecta que está no Netlify e usa o
+   Netlify Blobs automaticamente.
+7. Depois do primeiro deploy, rode as migrations e o seed contra o banco de produção. O jeito mais
+   simples é rodar localmente apontando para a `NETLIFY_DATABASE_URL` (copie o valor do dashboard
+   do Netlify para o seu `.env` local temporariamente):
+   ```bash
+   DATABASE_URL="<a NETLIFY_DATABASE_URL copiada>" npx prisma migrate deploy
+   DATABASE_URL="<a NETLIFY_DATABASE_URL copiada>" npm run db:seed
+   ```
+
+### Outras opções de hospedagem
+
+O app também roda em qualquer ambiente Node.js tradicional (Railway, Fly.io, VPS com Docker, etc) —
+nesse caso, use um Postgres qualquer (o do próprio provedor, ou Neon/Supabase) e, se o host tiver
+disco persistente, aponte `UPLOAD_DIR` para dentro dele (veja "Painel administrativo" acima).
+
 - **Domínio e variáveis de ambiente**: atualize `NEXT_PUBLIC_SITE_URL` para a URL final do site —
   ela é usada nas URLs de retorno do Mercado Pago.
 - **Marca**: nome, descrição, WhatsApp, e-mail e Instagram do brechó ficam centralizados em
