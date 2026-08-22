@@ -1,0 +1,81 @@
+// Prisma schema da loja do brechó
+// docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  // preço em centavos (evita erros de ponto flutuante)
+  price       Int
+  category    String
+  size        String?
+  // estado de conservação: "Novo com etiqueta", "Seminovo", "Usado"
+  condition   String
+  // JSON string com array de URLs de imagem (SQLite não suporta String[])
+  images      String
+  stock       Int      @default(1)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItem[]
+
+  @@index([category])
+  @@index([active])
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  address       String
+  city          String
+  state         String
+  zip           String
+  notes         String?
+  // pendente | pago | enviado | entregue | cancelado
+  status        String   @default("pendente")
+  // total em centavos
+  total         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  items OrderItem[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  order     Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  // snapshot do produto no momento da compra
+  name      String
+  price     Int
+  quantity  Int
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
