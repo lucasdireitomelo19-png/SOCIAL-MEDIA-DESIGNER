@@ -1,0 +1,76 @@
+name: Monitor de promoções
+
+on:
+  schedule:
+    - cron: "17 * * * *" # de hora em hora (horário UTC). Só roda na branch padrão do repositório.
+  workflow_dispatch:
+    inputs:
+      teste:
+        description: "Só mostrar no log, sem publicar no canal"
+        type: boolean
+        default: false
+  push:
+    paths:
+      - "tools/monitor-promocoes/**"
+      - ".github/workflows/monitor-promocoes.yml"
+
+concurrency:
+  group: monitor-promocoes
+  cancel-in-progress: false
+
+jobs:
+  testes:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/monitor-promocoes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -t . -v
+
+  monitor:
+    # Liga só depois de criar a variável MONITOR_ATIVO=true (Settings > Secrets and variables > Actions > Variables)
+    if: github.event_name != 'push' && vars.MONITOR_ATIVO == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: tools/monitor-promocoes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # O histórico de preços (SQLite) passa de uma execução pra outra pelo cache do Actions.
+      - name: Recuperar histórico de preços
+        uses: actions/cache/restore@v4
+        with:
+          path: tools/monitor-promocoes/data
+          key: precos-${{ github.run_id }}
+          restore-keys: precos-
+
+      - name: Rodar monitor
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+          AMAZON_ACCESS_KEY: ${{ secrets.AMAZON_ACCESS_KEY }}
+          AMAZON_SECRET_KEY: ${{ secrets.AMAZON_SECRET_KEY }}
+          AMAZON_PARTNER_TAG: ${{ vars.AMAZON_PARTNER_TAG }}
+          ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
+          ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
+          ML_REFRESH_TOKEN: ${{ secrets.ML_REFRESH_TOKEN }}
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_SECRET: ${{ secrets.SHOPEE_SECRET }}
+        run: python -m monitor rodar --config config.toml ${{ inputs.teste && '--teste' || '' }}
+
+      - name: Salvar histórico de preços
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: tools/monitor-promocoes/data
+          key: precos-${{ github.run_id }}

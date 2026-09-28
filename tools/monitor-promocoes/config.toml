@@ -1,0 +1,65 @@
+# Configuração do monitor de promoções.
+# Senhas e tokens NÃO ficam aqui: vão em variáveis de ambiente / GitHub Secrets (ver README).
+
+[canal]
+# @ do canal no Telegram (o bot precisa ser administrador). Também pode vir da variável TELEGRAM_CHAT_ID.
+chat_id = "@seu_canal_de_promos"
+rodape = "Links de afiliado: você não paga nada a mais e ainda apoia o canal 💛"
+max_posts_por_execucao = 5
+produtos_por_busca = 20
+
+[banco]
+caminho = "data/precos.sqlite3"
+
+[regras]
+desconto_real_minimo = 0.15     # 15% abaixo do preço normal (calculado pelo histórico)
+amostras_minimas = 6            # coletas nos últimos 30 dias antes de confiar no histórico
+dias_minimos_historico = 3      # produto novo só pode ir pro canal depois de 3 dias sendo monitorado
+tolerancia_menor_preco = 0.02
+nota_minima_loja = 4.0          # avaliação mínima (quando a loja informa)
+nota_minima = 20                # nota mínima da oferta
+dias_sem_repostar = 7
+queda_extra_pra_repostar = 0.05
+preco_minimo = 20.0
+
+[amazon]
+ativo = true
+
+[mercadolivre]
+ativo = true
+# Formato do link de afiliado. {url} = link do produto; {url_codificada} = mesmo link codificado.
+# Copie o formato do painel do Programa de Afiliados do Mercado Livre. Vazio = link normal.
+link_afiliado = ""
+
+[shopee]
+ativo = true
+
+# ---------------------------------------------------------------------------
+# O que monitorar. Cada busca roda em todas as lojas, ou só nas listadas em `lojas`.
+
+[[buscas]]
+termo = "air fryer"
+preco_maximo = 1000
+
+[[buscas]]
+termo = "fone bluetooth"
+
+[[buscas]]
+termo = "smartwatch"
+
+[[buscas]]
+termo = "iphone"
+lojas = ["amazon", "mercadolivre"]
+
+[[buscas]]
+termo = "ssd 1tb"
+
+[[buscas]]
+termo = "cafeteira expresso"
+
+[[buscas]]
+termo = "perfume importado"
+lojas = ["amazon", "mercadolivre"]
+
+[[buscas]]
+termo = "tenis corrida"
