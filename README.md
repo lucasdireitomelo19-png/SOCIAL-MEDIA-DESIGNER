@@ -8,5 +8,6 @@ em redes sociais), migrada do chat "Lucas Direito Media" para este projeto.
 - `docs/brand/identidade-visual.md` — cores, fontes e estilo visual da marca.
 - `docs/content/calendario-editorial.md` — pilares de conteúdo, calendário semanal e banco de pautas.
 - `assets/` — arquivos de apoio (texturas, exports, etc).
+- `monitor/` — monitor de promoções e descontos (Mercado Livre e Shopee) com alertas no Telegram. Veja `monitor/README.md`.
 
 As artes finais são geradas e editadas no Canva, seguindo a identidade visual documentada aqui.

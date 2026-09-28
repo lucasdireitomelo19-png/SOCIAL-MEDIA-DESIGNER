@@ -1,0 +1,50 @@
+# Configuração do monitor de promoções.
+# Edite as buscas e as regras e faça commit; o GitHub Actions usa este arquivo.
+
+# Marketplaces consultados. Uma fonte sem credenciais é ignorada com um aviso.
+fontes = ["mercadolivre", "shopee"]
+
+# Canais de alerta: "telegram", "discord" e/ou "console" (imprime no log).
+alertas = ["telegram"]
+
+# Arquivo do histórico de preços (relativo a esta pasta).
+banco = "data/precos.db"
+
+limite_por_busca = 50
+
+# Termos pesquisados em cada marketplace a cada execução.
+buscas = [
+  "fone bluetooth",
+  "ring light",
+  "microfone de lapela",
+  "tripé celular",
+]
+
+# Produtos específicos para acompanhar sempre (IDs do anúncio).
+[itens]
+mercadolivre = []  # ex.: "MLB1234567890"
+shopee = []        # ex.: "22345678901"
+
+[regras]
+# Promoção = preço atual pelo menos 20% abaixo da mediana dos últimos 30 dias...
+min_discount = 0.20
+history_days = 30
+# ...ou menor preço dos últimos 90 dias, com pelo menos 10% abaixo da mediana.
+lowest_days = 90
+lowest_min_discount = 0.10
+# Coletas necessárias antes de confiar no histórico.
+min_history = 5
+
+# Sem histórico, confiar no "de/por" da loja? (muitas lojas inflam o "de")
+trust_listed_discount = false
+listed_min_discount = 0.35
+
+# Só alerta de novo o mesmo produto se cair mais 5% ou depois de 7 dias.
+realert_drop = 0.05
+realert_cooldown_days = 7
+
+# Filtros
+min_price = 20.0
+# max_price = 2000.0
+require_free_shipping = false
+exclude_words = ["capa", "película", "usado", "recondicionado"]
