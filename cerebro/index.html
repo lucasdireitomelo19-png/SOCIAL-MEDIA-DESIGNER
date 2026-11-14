@@ -2,11 +2,11 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: cérebro 3D em tela cheia; HUD no topo, legenda das áreas embaixo, painel do projeto flutuando à direita (folha inferior no celular). Visual escuro de propósito, tema único. */
+/* Layout: cérebro 3D em tela cheia; HUD no topo; painel do projeto flutuando à direita; doca do Jarvis (legendas da conversa, orbe de voz, campo de texto, áreas) embaixo. Tema escuro único, de propósito. */
 :root{
   color-scheme:dark;
   --bg:#05070f; --panel:rgba(12,17,34,.82); --line:rgba(140,170,255,.18); --fg:#e8ecff; --muted:#8e98c2; --accent:#7fd8ff;
-  --ok:#5ff0b0; --warn:#ffc35a; --idle:#7c86a8; --bad:#ff6b7a;
+  --ok:#5ff0b0; --warn:#ffc35a; --idle:#7c86a8; --bad:#ff6b7a; --think:#b48cff;
   --f-display:"Chakra Petch","Inter",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -21,27 +21,25 @@ body{background:radial-gradient(ellipse at 50% 40%,#0d1430 0%,var(--bg) 70%);col
 h1{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,3.4vw,34px);letter-spacing:.06em;text-transform:uppercase;margin:0;text-shadow:0 0 18px rgba(127,216,255,.45)}
 .sub{margin:2px 0 0;color:var(--muted);font-size:12.5px}
 .right{display:grid;gap:6px;justify-items:end}
-.live{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--panel);backdrop-filter:blur(8px)}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--panel);backdrop-filter:blur(8px)}
+button.chip{cursor:pointer;font-family:var(--f-mono)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--idle)}
 .live.on .dot{background:var(--ok);animation:ping 2s infinite}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(95,240,176,.6)}100%{box-shadow:0 0 0 8px transparent}}
 .stats{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
 .stats b{color:var(--fg);font-weight:500;font-variant-numeric:tabular-nums}
-.legend{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));pointer-events:none}
-.legend button{pointer-events:auto;font:inherit;font-size:12px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px;display:inline-flex;gap:7px;align-items:center;cursor:pointer;backdrop-filter:blur(8px)}
-.legend button[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 14px -2px var(--c)}
-.legend i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
-.legend .hint{color:var(--muted);font-size:11.5px;align-self:center;width:100%;text-align:center}
+
 #labels{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
-.lbl{position:absolute;left:0;top:0;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 8px;border-radius:6px;background:rgba(5,8,20,.65);border:1px solid var(--line);transform:translate(-50%,-150%);transition:opacity .2s;color:var(--fg)}
+.lbl{position:absolute;left:0;top:0;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 8px;border-radius:6px;background:rgba(5,8,20,.65);border:1px solid var(--line);transition:opacity .25s;color:var(--fg);will-change:transform}
 .lbl.area{font-family:var(--f-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;color:var(--c);border-color:transparent;background:none;text-shadow:0 0 10px var(--c)}
 .lbl.hide{opacity:0}
 .lbl.sel{border-color:var(--c);box-shadow:0 0 12px -2px var(--c)}
 #tip{position:fixed;z-index:6;pointer-events:none;max-width:240px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;backdrop-filter:blur(8px)}
 #tip b{display:block;font-size:13px}
 #tip span{color:var(--muted)}
-aside{position:fixed;z-index:7;top:calc(86px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));width:340px;max-height:calc(100% - 170px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;backdrop-filter:blur(12px);box-shadow:0 0 40px -10px var(--c,#7fd8ff)}
-@media (max-width:720px){aside{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;top:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-height:58%}}
+
+aside{position:fixed;z-index:7;top:calc(86px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));width:340px;max-height:calc(100% - 330px);min-height:120px;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;align-content:start;backdrop-filter:blur(12px);box-shadow:0 0 40px -10px var(--c,#7fd8ff)}
+@media (max-width:720px){aside{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;top:calc(104px + env(safe-area-inset-top,0px));max-height:34%;padding:14px}.sub{display:none}}
 .eyebrow{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--c,var(--muted))}
 aside h2{font-family:var(--f-display);font-size:24px;margin:2px 0 0;line-height:1.1;text-wrap:balance}
 aside p{margin:0;line-height:1.5}
@@ -55,7 +53,7 @@ dt{color:var(--muted)} dd{margin:0;overflow-wrap:anywhere}
 .links{display:flex;flex-wrap:wrap;gap:8px}
 .links a{color:var(--accent);font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;text-decoration:none}
 .links a:hover{border-color:var(--accent)}
-form{display:grid;gap:9px;border-top:1px solid var(--line);padding-top:12px}
+form.f{display:grid;gap:9px;border-top:1px solid var(--line);padding-top:12px}
 label{display:grid;gap:4px;font-size:11.5px;color:var(--muted)}
 input,select,textarea{font:inherit;font-size:13px;color:var(--fg);background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:8px;padding:7px 9px;width:100%}
 textarea{min-height:52px;resize:vertical}
@@ -70,6 +68,37 @@ button.del-yes{background:var(--bad);border-color:var(--bad);color:#1a0508}
 .feed button{all:unset;cursor:pointer;display:grid;gap:2px;padding:8px 10px;border-radius:8px;border:1px solid var(--line)}
 .feed button:hover,.feed button:focus-visible{border-color:var(--c)}
 .feed b{font-size:13px}.feed span{font-size:12px;color:var(--muted)}
+
+/* Doca do Jarvis */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:8;display:grid;justify-items:center;gap:10px;pointer-events:none;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dock>*{pointer-events:auto}
+.talk{display:grid;gap:4px;justify-items:center;text-align:center;max-width:min(680px,100%);min-height:1px}
+#said{font-size:13px;color:var(--muted);font-style:italic;min-height:0}
+#answer{font-size:clamp(15px,1.8vw,18px);line-height:1.45;color:var(--fg);text-shadow:0 1px 12px rgba(0,0,0,.9);text-wrap:balance;max-height:7.5em;overflow:auto}
+.jrow{display:flex;align-items:center;gap:12px;width:min(620px,100%)}
+.orb{flex:none;width:64px;height:64px;border-radius:50%;border:1px solid rgba(127,216,255,.5);cursor:pointer;position:relative;background:radial-gradient(circle at 50% 40%,rgba(127,216,255,.55),rgba(30,60,140,.35) 60%,rgba(5,10,25,.8));box-shadow:0 0 24px -4px var(--mc,var(--accent)),inset 0 0 18px rgba(127,216,255,.35);transition:transform .2s}
+.orb:hover{transform:scale(1.05)}
+.orb::before,.orb::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--mc,var(--accent));opacity:.35}
+.orb svg{width:24px;height:24px;position:absolute;inset:0;margin:auto;fill:none;stroke:var(--fg);stroke-width:1.8;stroke-linecap:round}
+body[data-mood="listening"]{--mc:var(--accent)}
+body[data-mood="thinking"]{--mc:var(--think)}
+body[data-mood="speaking"]{--mc:var(--ok)}
+body[data-mood="listening"] .orb::before{animation:ring 1.4s ease-out infinite}
+body[data-mood="listening"] .orb::after{animation:ring 1.4s .7s ease-out infinite}
+body[data-mood="thinking"] .orb::before{border-style:dashed;animation:spin 1.2s linear infinite;opacity:.8}
+body[data-mood="speaking"] .orb{animation:talk .45s ease-in-out infinite alternate}
+@keyframes ring{from{transform:scale(1);opacity:.7}to{transform:scale(1.7);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes talk{to{box-shadow:0 0 44px 2px var(--mc),inset 0 0 22px rgba(95,240,176,.45)}}
+#ask{flex:1;display:flex;gap:8px;min-width:0}
+#askIn{background:var(--panel);backdrop-filter:blur(8px);border-radius:999px;padding:10px 16px;font-size:14px}
+#ask .b{border-radius:999px}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.legend button{font:inherit;font-size:12px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 11px;display:inline-flex;gap:7px;align-items:center;cursor:pointer;backdrop-filter:blur(8px)}
+.legend button[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 14px -2px var(--c)}
+.legend i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+@media (max-width:720px){.legend{display:none}.orb{width:56px;height:56px}#ask .b{display:none}}
+@media (prefers-reduced-motion:reduce){.orb::before,.orb::after,.orb{animation:none!important}}
 #fallback[hidden]{display:none}
 #fallback{position:fixed;inset:0;display:grid;place-items:center;color:var(--muted);text-align:center;padding:24px}
 </style>
@@ -82,15 +111,31 @@ button.del-yes{background:var(--bad);border-color:var(--bad);color:#1a0508}
 <div class="hud">
   <div>
     <h1>Cérebro</h1>
-    <p class="sub">Arraste pra girar · role ou pince pra dar zoom · clique num neurônio</p>
+    <p class="sub">Arraste pra girar · pince ou role pra zoom · toque no orbe e fale</p>
   </div>
   <div class="right">
-    <span class="live" id="live"><span class="dot"></span><span id="liveTxt">conectando…</span></span>
+    <div class="row">
+      <button class="chip" type="button" id="mute" aria-pressed="false">voz: ligada</button>
+      <span class="chip live" id="live"><span class="dot"></span><span id="liveTxt">conectando…</span></span>
+    </div>
     <div class="stats" id="stats"></div>
   </div>
 </div>
 <aside id="panel"></aside>
-<div class="legend" id="legend"></div>
+
+<div class="dock">
+  <div class="talk" aria-live="polite">
+    <div id="said"></div>
+    <div id="answer">Toque no orbe e fale. Ex.: “o que tá parado há mais tempo?”</div>
+  </div>
+  <div class="jrow">
+    <button class="orb" id="orb" type="button" aria-label="Falar com o Jarvis (atalho: espaço)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+    </button>
+    <form id="ask"><input id="askIn" autocomplete="off" placeholder="Ou digite um comando…" aria-label="Comando para o Jarvis"><button class="b" type="submit">Enviar</button></form>
+  </div>
+  <div class="legend" id="legend"></div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -109,241 +154,211 @@ const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":
 const safeUrl = u=>{try{const x=new URL(u);return /^https?:$/.test(x.protocol)?x.href:null}catch{return null}};
 const daysAgo = iso=>iso?Math.max(0,Math.floor((Date.now()-new Date(iso))/864e5)):null;
 const whenTxt = iso=>{const d=daysAgo(iso);if(d===null)return"sem registro";if(d===0)return"hoje";if(d===1)return"ontem";if(d<30)return`há ${d} dias`;const m=Math.round(d/30);return m<12?`há ${m} ${m>1?"meses":"mês"}`:"há mais de 1 ano"};
-const areaOf = p=>AREAS[p.area]?p.area:"Outros";
+const areaOf = p=>AREAS[p&&p.area]?p.area:"Outros";
+const slug = s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let projects=[], selected=null, focusArea=null, db=null, canWrite=false;
+let projects=[], byId={}, selected=null, focusArea=null, db=null, canWrite=false, mood="idle", lastSig="";
 
-/* ---------- forma do cérebro ---------- */
-function gyri(x,y,z){
-  return 0.045*Math.sin(9*x+3*y)*Math.cos(8*z-2*y) + 0.03*Math.sin(15*y+7*z)*Math.sin(13*x) + 0.02*Math.cos(21*x-17*z+5*y);
-}
-function surf(dx,dy,dz){ // direção -> ponto na superfície do cérebro
-  const L=Math.hypot(dx,dy,dz)||1; let x=dx/L,y=dy/L,z=dz/L;
-  let r = 1 + gyri(x,y,z);
-  if(y<-0.15) r *= 1 - (-0.15-y)*0.35;            // base achatada
-  let px=x*r*1.0, py=y*r*0.82, pz=z*r*1.22;
-  px += Math.sign(x||1)*0.05;                    // fissura entre hemisférios
-  if(Math.abs(x)<0.08 && y>0) py -= 0.06;
+/* ================= forma do cérebro ================= */
+function gyri(x,y,z){ return 0.045*Math.sin(9*x+3*y)*Math.cos(8*z-2*y) + 0.03*Math.sin(15*y+7*z)*Math.sin(13*x) + 0.02*Math.cos(21*x-17*z+5*y); }
+function surf(dx,dy,dz){
+  const L=Math.hypot(dx,dy,dz)||1; const x=dx/L,y=dy/L,z=dz/L;
+  let r=1+gyri(x,y,z); if(y<-0.15) r*=1-(-0.15-y)*0.35;
+  let px=x*r, py=y*r*0.82, pz=z*r*1.22;
+  px+=Math.sign(x||1)*0.05; if(Math.abs(x)<0.08&&y>0) py-=0.06;
   return new THREE.Vector3(px,py+0.08,pz);
 }
-function cerebellum(dx,dy,dz){
-  const L=Math.hypot(dx,dy,dz)||1; const x=dx/L,y=dy/L,z=dz/L;
-  const r=1+0.05*Math.sin(30*y);
-  return new THREE.Vector3(x*0.52*r, y*0.3*r-0.62, z*0.38*r-0.78);
-}
-function rndDir(){ const u=Math.random()*2-1, t=Math.random()*Math.PI*2, s=Math.sqrt(1-u*u); return [s*Math.cos(t),u,s*Math.sin(t)]; }
+function cerebellum(dx,dy,dz){ const L=Math.hypot(dx,dy,dz)||1; const x=dx/L,y=dy/L,z=dz/L; const r=1+0.05*Math.sin(30*y); return new THREE.Vector3(x*0.52*r,y*0.3*r-0.62,z*0.38*r-0.78); }
+function rndDir(){ const u=Math.random()*2-1,t=Math.random()*Math.PI*2,s=Math.sqrt(1-u*u); return [s*Math.cos(t),u,s*Math.sin(t)]; }
+function glowTex(){ const c=document.createElement("canvas"); c.width=c.height=64; const g=c.getContext("2d"); const gr=g.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,"rgba(255,255,255,1)"); gr.addColorStop(.25,"rgba(255,255,255,.7)"); gr.addColorStop(1,"rgba(255,255,255,0)"); g.fillStyle=gr; g.fillRect(0,0,64,64); return new THREE.CanvasTexture(c); }
 
-function glowTex(){
-  const c=document.createElement("canvas"); c.width=c.height=64; const g=c.getContext("2d");
-  const gr=g.createRadialGradient(32,32,0,32,32,32);
-  gr.addColorStop(0,"rgba(255,255,255,1)"); gr.addColorStop(.25,"rgba(255,255,255,.7)"); gr.addColorStop(1,"rgba(255,255,255,0)");
-  g.fillStyle=gr; g.fillRect(0,0,64,64); return new THREE.CanvasTexture(c);
-}
-
-let renderer, scene, camera, controls, brain, nodeGroup, linkGroup, pulses=[], nodeMeshes=[], areaHubs={}, labels=[];
-const tex = window.THREE ? glowTex() : null;
+let renderer,scene,camera,controls,brain,nodeGroup,linkGroup,cloud,web,core,tex,clock,pulses=[],nodeMeshes=[],areaHubs={},labels=[];
+const V=window.THREE?{a:new THREE.Vector3(),cam:new THREE.Vector3(),n:new THREE.Vector3()}:null;
+const COL=window.THREE?{idle:new THREE.Color("#7fd8ff"),listening:new THREE.Color("#9ff4ff"),thinking:new THREE.Color("#b48cff"),speaking:new THREE.Color("#5ff0b0")}:null;
 
 function init(){
   if(!window.THREE){ $("#fallback").hidden=false; return false; }
-  try{ renderer = new THREE.WebGLRenderer({antialias:true,alpha:true}); }catch(e){ $("#fallback").hidden=false; return false; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  try{ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"}); }catch(e){ $("#fallback").hidden=false; return false; }
+  tex=glowTex(); clock=new THREE.Clock();
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth<720?1.5:1.75));
   $("#stage").appendChild(renderer.domElement);
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(42,1,0.1,100);
-  camera.position.set(2.6,1.2,3.4);
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping=true; controls.dampingFactor=0.07; controls.minDistance=1.8; controls.maxDistance=8; controls.enablePan=false;
-  controls.autoRotate=!reduce; controls.autoRotateSpeed=0.55;
-  let idle; controls.addEventListener("start",()=>{controls.autoRotate=false;clearTimeout(idle)});
-  controls.addEventListener("end",()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!reduce&&!selected)controls.autoRotate=true},6000)});
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(42,1,0.1,100); camera.position.set(2.6,1.2,3.4);
+  controls=new THREE.OrbitControls(camera,renderer.domElement);
+  Object.assign(controls,{enableDamping:true,dampingFactor:0.06,rotateSpeed:0.6,zoomSpeed:0.7,minDistance:1.8,maxDistance:8,enablePan:false,autoRotate:!reduce,autoRotateSpeed:0.45});
+  let idle; controls.addEventListener("start",()=>{flyTo=null;controls.autoRotate=false;clearTimeout(idle)});
+  controls.addEventListener("end",()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!reduce&&!selected&&!focusArea)controls.autoRotate=true},7000)});
 
-  brain = new THREE.Group(); scene.add(brain);
-  // nuvem de neurônios
-  const N=9000, pos=new Float32Array(N*3), col=new Float32Array(N*3), cA=new THREE.Color("#5b7cff"), cB=new THREE.Color("#8ff0ff"), tmp=new THREE.Color();
-  const pts=[];
+  brain=new THREE.Group(); scene.add(brain);
+  const N=innerWidth<720?5500:8000, pos=new Float32Array(N*3), col=new Float32Array(N*3), cA=new THREE.Color("#5b7cff"), cB=new THREE.Color("#8ff0ff"), tmp=new THREE.Color(), pts=[];
   for(let i=0;i<N;i++){
-    const d=rndDir(); const inside = Math.random()<0.18 ? 0.55+Math.random()*0.4 : 1;
-    let p = i<N*0.88 ? surf(...d) : cerebellum(...d);
-    p.multiplyScalar(inside===1?1:inside);
+    const d=rndDir(), inside=Math.random()<0.18?0.55+Math.random()*0.4:1;
+    const p=(i<N*0.88?surf(...d):cerebellum(...d)).multiplyScalar(inside);
     pos.set([p.x,p.y,p.z],i*3); pts.push(p);
-    tmp.copy(cA).lerp(cB, Math.min(1,Math.max(0,(p.y+0.6)/1.4))); col.set([tmp.r,tmp.g,tmp.b],i*3);
+    tmp.copy(cA).lerp(cB,Math.min(1,Math.max(0,(p.y+0.6)/1.4))); col.set([tmp.r,tmp.g,tmp.b],i*3);
   }
   const g=new THREE.BufferGeometry(); g.setAttribute("position",new THREE.BufferAttribute(pos,3)); g.setAttribute("color",new THREE.BufferAttribute(col,3));
-  brain.add(new THREE.Points(g,new THREE.PointsMaterial({size:0.022,map:tex,vertexColors:true,transparent:true,opacity:.85,depthWrite:false,blending:THREE.AdditiveBlending})));
-  // teia neural: liga vizinhos
-  const seg=[]; for(let k=0;k<1400;k++){ const a=pts[(Math.random()*pts.length)|0]; let best=null,bd=1e9; for(let t=0;t<40;t++){const b=pts[(Math.random()*pts.length)|0]; const dd=a.distanceToSquared(b); if(dd>0.002&&dd<bd){bd=dd;best=b}} if(best&&bd<0.03) seg.push(a.x,a.y,a.z,best.x,best.y,best.z); }
+  cloud=new THREE.Points(g,new THREE.PointsMaterial({size:0.022,map:tex,vertexColors:true,transparent:true,opacity:.85,depthWrite:false,blending:THREE.AdditiveBlending}));
+  brain.add(cloud);
+  const seg=[]; for(let k=0;k<1300;k++){ const a=pts[(Math.random()*pts.length)|0]; let best=null,bd=1e9; for(let t=0;t<40;t++){const b=pts[(Math.random()*pts.length)|0]; const dd=a.distanceToSquared(b); if(dd>0.002&&dd<bd){bd=dd;best=b}} if(best&&bd<0.03) seg.push(a.x,a.y,a.z,best.x,best.y,best.z); }
   const lg=new THREE.BufferGeometry(); lg.setAttribute("position",new THREE.Float32BufferAttribute(seg,3));
-  brain.add(new THREE.LineSegments(lg,new THREE.LineBasicMaterial({color:"#4f7dff",transparent:true,opacity:.16,blending:THREE.AdditiveBlending,depthWrite:false})));
-  // tronco
-  const stem=[]; for(let i=0;i<500;i++){ const t=Math.random(), a=Math.random()*6.28, r=0.12*(1-t*0.3); stem.push(Math.cos(a)*r, -0.35-t*0.75, -0.35-t*0.1+Math.sin(a)*r); }
+  web=new THREE.LineSegments(lg,new THREE.LineBasicMaterial({color:"#4f7dff",transparent:true,opacity:.16,blending:THREE.AdditiveBlending,depthWrite:false})); brain.add(web);
+  const stem=[]; for(let i=0;i<450;i++){ const t=Math.random(),a=Math.random()*6.28,r=0.12*(1-t*0.3); stem.push(Math.cos(a)*r,-0.35-t*0.75,-0.35-t*0.1+Math.sin(a)*r); }
   const sg=new THREE.BufferGeometry(); sg.setAttribute("position",new THREE.Float32BufferAttribute(stem,3));
   brain.add(new THREE.Points(sg,new THREE.PointsMaterial({size:0.02,map:tex,color:"#3f5fd0",transparent:true,opacity:.7,depthWrite:false,blending:THREE.AdditiveBlending})));
-  // núcleo
-  const core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color:"#7fd8ff",transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));
-  core.scale.setScalar(0.5); core.position.set(0,0.05,0); brain.add(core); brain.userData.core=core;
-
-  linkGroup=new THREE.Group(); nodeGroup=new THREE.Group(); brain.add(linkGroup); brain.add(nodeGroup);
-
-  addEventListener("resize",resize); resize();
-  setupPointer();
-  animate();
+  core=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color:"#7fd8ff",transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));
+  core.scale.setScalar(0.5); core.position.set(0,0.05,0); brain.add(core);
+  linkGroup=new THREE.Group(); nodeGroup=new THREE.Group(); brain.add(linkGroup,nodeGroup);
+  addEventListener("resize",resize); resize(); setupPointer(); requestAnimationFrame(animate);
   return true;
 }
-function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.fov = w<720?55:42; camera.updateProjectionMatrix(); }
+function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.fov=w<720?58:42; camera.updateProjectionMatrix(); }
 
-/* ---------- projetos como neurônios ---------- */
+/* ================= neurônios dos projetos ================= */
 function groups(){ const g={}; projects.forEach(p=>{(g[areaOf(p)]=g[areaOf(p)]||[]).push(p)}); return g; }
-function hash(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return h}
+function hash(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)}
+function disposeGroup(gr){ [...gr.children].forEach(c=>{ gr.remove(c); c.geometry&&c.geometry.dispose(); c.material&&c.material.dispose(); }); }
 
 function buildNodes(){
   if(!nodeGroup) return;
-  [...nodeGroup.children].forEach(c=>nodeGroup.remove(c)); [...linkGroup.children].forEach(c=>linkGroup.remove(c));
+  disposeGroup(nodeGroup); disposeGroup(linkGroup);
   nodeMeshes=[]; pulses=[]; areaHubs={}; $("#labels").innerHTML=""; labels=[];
-  const coreP=new THREE.Vector3(0,0.05,0);
+  const coreP=new THREE.Vector3(0,0.05,0), gray=new THREE.Color("#7c86a8");
   Object.entries(groups()).forEach(([area,list])=>{
-    const A=AREAS[area], color=new THREE.Color(A.hex);
-    const surfP=surf(...A.dir), hub=surfP.clone().multiplyScalar(0.62);
-    areaHubs[area]={pos:surfP.clone(), color};
+    const A=AREAS[area], color=new THREE.Color(A.hex), surfP=surf(...A.dir), hub=surfP.clone().multiplyScalar(0.62);
+    areaHubs[area]={pos:surfP.clone()};
     const hs=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false}));
     hs.scale.setScalar(0.28); hs.position.copy(hub); nodeGroup.add(hs);
     addCurve(coreP,hub,color,0.22,true);
-    addLabel({area, pos:hub, cls:"area", text:A.lobe.replace(/^lobo /,"")==="cerebelo"?area:area});
+    addLabel({area,pos:hub,cls:"area",text:area});
+    const base=new THREE.Vector3(...A.dir).normalize();
+    const t1=new THREE.Vector3().crossVectors(base,new THREE.Vector3(0,1,0.001)).normalize(), t2=new THREE.Vector3().crossVectors(base,t1).normalize();
     list.forEach((p,j)=>{
-      const h=hash(p.id), n=list.length;
-      const ang=(j/n)*Math.PI*2 + (h%100)/100, spread = 0.18 + 0.05*Math.min(n,5);
-      const base=new THREE.Vector3(...A.dir).normalize();
-      const t1=new THREE.Vector3().crossVectors(base,new THREE.Vector3(0,1,0.001)).normalize(), t2=new THREE.Vector3().crossVectors(base,t1).normalize();
-      const dir=base.clone().add(t1.multiplyScalar(Math.cos(ang)*spread*(n>1?1:0))).add(t2.multiplyScalar(Math.sin(ang)*spread*(n>1?1:0)));
+      const n=list.length, ang=(j/n)*Math.PI*2+(hash(p.id)%100)/100, spread=n>1?0.18+0.05*Math.min(n,5):0;
+      const dir=base.clone().addScaledVector(t1,Math.cos(ang)*spread).addScaledVector(t2,Math.sin(ang)*spread);
       const pos=surf(dir.x,dir.y,dir.z).multiplyScalar(1.04);
       const d=daysAgo(p.last_activity), hot=d!==null&&d<=7, faded=p.status==="pausado"||p.status==="concluido";
-      const c = faded ? color.clone().lerp(new THREE.Color("#7c86a8"),0.55) : color;
-      const size = hot?0.2: d!==null&&d<=30?0.15:0.12;
+      const c=faded?color.clone().lerp(gray,0.55):color, size=hot?0.2:d!==null&&d<=30?0.15:0.12;
       const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color:c,transparent:true,opacity:faded?.55:1,blending:THREE.AdditiveBlending,depthWrite:false}));
-      glow.scale.setScalar(size*(hot?1.6:1.3)); glow.position.copy(pos); nodeGroup.add(glow);
-      const m=new THREE.Mesh(new THREE.SphereGeometry(size*0.22,16,16),new THREE.MeshBasicMaterial({color:new THREE.Color("#ffffff").lerp(c,0.35)}));
-      m.position.copy(pos); m.userData={id:p.id,glow,hot,base:size*(hot?1.6:1.3),phase:Math.random()*6}; nodeGroup.add(m); nodeMeshes.push(m);
-      addCurve(hub,pos,c,faded?0.18:0.4,hot||!faded);
-      addLabel({id:p.id, pos, cls:"", text:p.name, color:A.hex});
+      glow.scale.setScalar(size*1.3); glow.position.copy(pos); nodeGroup.add(glow);
+      const m=new THREE.Mesh(new THREE.SphereGeometry(size*0.22,14,14),new THREE.MeshBasicMaterial({color:new THREE.Color("#ffffff").lerp(c,0.35),transparent:true}));
+      m.position.copy(pos); m.userData={id:p.id,area,glow,hot,faded,base:size*(hot?1.6:1.3),cur:size*1.3,phase:Math.random()*6}; nodeGroup.add(m); nodeMeshes.push(m);
+      addCurve(hub,pos,c,faded?0.18:0.4,!faded);
+      addLabel({id:p.id,area,pos,cls:"",text:p.name,color:A.hex});
     });
   });
   applyFocus();
 }
 function addCurve(a,b,color,op,pulse){
-  const mid=a.clone().add(b).multiplyScalar(0.5); mid.multiplyScalar(1.12);
-  const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
-  const geo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(32));
-  const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false}));
-  line.userData.op=op; linkGroup.add(line);
-  if(pulse && !reduce){
-    const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color,transparent:true,opacity:.95,blending:THREE.AdditiveBlending,depthWrite:false}));
-    s.scale.setScalar(0.07); linkGroup.add(s); pulses.push({s,curve,t:Math.random(),v:0.25+Math.random()*0.35});
-  }
+  const mid=a.clone().add(b).multiplyScalar(0.56); const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
+  linkGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(28)),new THREE.LineBasicMaterial({color,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false})));
+  if(pulse&&!reduce){ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,color,transparent:true,opacity:.95,blending:THREE.AdditiveBlending,depthWrite:false})); s.scale.setScalar(0.07); linkGroup.add(s); pulses.push({s,curve,t:Math.random(),v:0.25+Math.random()*0.35}); }
 }
-function addLabel(o){
-  const el=document.createElement("div"); el.className="lbl "+o.cls; el.textContent=o.text;
-  el.style.setProperty("--c", o.color || (AREAS[o.area]&&AREAS[o.area].hex));
-  $("#labels").appendChild(el); labels.push({...o, el});
-}
+function addLabel(o){ const el=document.createElement("div"); el.className="lbl hide "+o.cls; el.textContent=o.text; el.style.setProperty("--c",o.color||AREAS[o.area].hex); $("#labels").appendChild(el); labels.push({...o,el,shown:false}); }
 
-/* ---------- interação ---------- */
-const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let hover=null, downAt=null;
+/* ================= interação com o 3D ================= */
+let hover=null, downAt=null, flyTo=null;
+const ray=window.THREE?new THREE.Raycaster():null, mouse=window.THREE?new THREE.Vector2():null;
 function pick(ev){
-  const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1);
-  ray.setFromCamera(mouse,camera); ray.params.Mesh={threshold:0.05};
-  const hits=ray.intersectObjects(nodeMeshes,false);
-  if(hits.length) return hits[0].object;
-  // tolerância: neurônio mais próximo na tela
-  let best=null,bd=22*22; const v=new THREE.Vector3();
-  nodeMeshes.forEach(m=>{ m.getWorldPosition(v); v.project(camera); const x=(v.x+1)/2*r.width, y=(1-v.y)/2*r.height; const d=(x-(ev.clientX-r.left))**2+(y-(ev.clientY-r.top))**2; if(d<bd&&v.z<1){bd=d;best=m} });
+  const r=renderer.domElement.getBoundingClientRect(), mx=ev.clientX-r.left, my=ev.clientY-r.top;
+  let best=null,bd=(ev.pointerType==="touch"?30:20)**2;
+  nodeMeshes.forEach(m=>{ V.a.copy(m.position).applyMatrix4(brain.matrixWorld).project(camera); if(V.a.z>1) return; const x=(V.a.x+1)/2*r.width,y=(1-V.a.y)/2*r.height,d=(x-mx)**2+(y-my)**2; if(d<bd){bd=d;best=m} });
   return best;
 }
 function setupPointer(){
   const c=renderer.domElement;
   c.addEventListener("pointermove",ev=>{
+    if(ev.pointerType!=="mouse") return;
     const m=pick(ev); hover=m; c.style.cursor=m?"pointer":"grab";
-    const tip=$("#tip");
-    if(m && ev.pointerType==="mouse"){ const p=projects.find(x=>x.id===m.userData.id); if(p){ tip.innerHTML=`<b>${esc(p.name)}</b><span>${esc(STATUS[p.status]||"")} · ${whenTxt(p.last_activity)}</span>`; tip.hidden=false; tip.style.left=(ev.clientX+14)+"px"; tip.style.top=(ev.clientY+14)+"px"; } }
+    const tip=$("#tip"), p=m&&byId[m.userData.id];
+    if(p){ tip.innerHTML=`<b>${esc(p.name)}</b><span>${esc(STATUS[p.status]||"")} · ${whenTxt(p.last_activity)}</span>`; tip.hidden=false; tip.style.left=(ev.clientX+14)+"px"; tip.style.top=(ev.clientY+14)+"px"; }
     else tip.hidden=true;
   });
+  c.addEventListener("pointerleave",()=>{hover=null;$("#tip").hidden=true});
   c.addEventListener("pointerdown",ev=>{downAt=[ev.clientX,ev.clientY]});
-  c.addEventListener("pointerup",ev=>{
-    if(!downAt||Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])>6) return;
-    const m=pick(ev); if(m) select(m.userData.id); else if(selected){ select(null); }
-  });
+  c.addEventListener("pointerup",ev=>{ if(!downAt||Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])>6) return; const m=pick(ev); if(m) select(m.userData.id); else if(selected) select(null); });
 }
-let flyTo=null;
+function flyToward(worldPos,dist){ const w=worldPos.clone(); flyTo={target:w.clone().multiplyScalar(0.35),cam:w.clone().normalize().multiplyScalar(dist).add(new THREE.Vector3(0,0.3,0))}; if(controls) controls.autoRotate=false; }
 function select(id){
-  selected=id; controls.autoRotate=false;
-  if(id){ const m=nodeMeshes.find(x=>x.userData.id===id); if(m){ const w=m.getWorldPosition(new THREE.Vector3()); flyTo={target:w.clone().multiplyScalar(0.35), cam:w.clone().normalize().multiplyScalar(3.0).add(new THREE.Vector3(0,0.3,0))}; } }
-  else flyTo={target:new THREE.Vector3(), cam:camera.position.clone().normalize().multiplyScalar(4.4)};
-  applyFocus(); renderPanel();
+  selected=id||null; if(selected) focusArea=null;
+  if(controls){
+    if(selected){ const m=nodeMeshes.find(x=>x.userData.id===selected); if(m) flyToward(m.position.clone().applyMatrix4(brain.matrixWorld),3.0); }
+    else flyTo={target:new THREE.Vector3(),cam:camera.position.clone().normalize().multiplyScalar(4.4)};
+  }
+  applyFocus(); renderLegend(); renderPanel();
 }
-function focusOn(area){
-  focusArea = focusArea===area?null:area; selected=null;
-  if(focusArea && areaHubs[focusArea]){ const w=areaHubs[focusArea].pos.clone().applyMatrix4(brain.matrixWorld); flyTo={target:w.clone().multiplyScalar(0.3), cam:w.clone().normalize().multiplyScalar(3.3).add(new THREE.Vector3(0,0.3,0))}; controls.autoRotate=false; }
+function setArea(area){
+  focusArea=area||null; selected=null;
+  if(controls){ if(focusArea&&areaHubs[focusArea]) flyToward(areaHubs[focusArea].pos.clone().applyMatrix4(brain.matrixWorld),3.3); else { flyTo={target:new THREE.Vector3(),cam:camera.position.clone().normalize().multiplyScalar(4.4)}; if(!reduce) controls.autoRotate=true; } }
   applyFocus(); renderLegend(); renderPanel();
 }
 function applyFocus(){
-  const selArea = selected ? areaOf(projects.find(p=>p.id===selected)||{}) : focusArea;
-  nodeMeshes.forEach(m=>{ const p=projects.find(x=>x.id===m.userData.id); const on=!selArea||areaOf(p)===selArea; m.material.opacity=on?1:.2; m.material.transparent=true; m.userData.glow.material.opacity=on?(p.status==="pausado"||p.status==="concluido"?.55:1):.12; });
-  labels.forEach(l=>{ l.el.classList.toggle("sel", l.id && l.id===selected); });
+  const selArea=selected?areaOf(byId[selected]):focusArea;
+  nodeMeshes.forEach(m=>{ const on=!selArea||m.userData.area===selArea; m.material.opacity=on?1:.2; m.userData.glow.material.opacity=on?(m.userData.faded?.55:1):.12; });
+  labels.forEach(l=>l.el.classList.toggle("sel",!!l.id&&l.id===selected));
 }
 
-/* ---------- loop ---------- */
-const clock=window.THREE?new THREE.Clock():null; const v3=window.THREE?new THREE.Vector3():null;
+/* ================= loop de animação ================= */
 function animate(){
   requestAnimationFrame(animate);
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
-  if(flyTo){ controls.target.lerp(flyTo.target,0.08); camera.position.lerp(flyTo.cam,0.06); if(camera.position.distanceTo(flyTo.cam)<0.02) flyTo=null; }
+  if(flyTo){ const k=1-Math.pow(0.02,dt); controls.target.lerp(flyTo.target,k); camera.position.lerp(flyTo.cam,k); if(camera.position.distanceTo(flyTo.cam)<0.01) flyTo=null; }
   controls.update();
-  pulses.forEach(p=>{ p.t=(p.t+dt*p.v)%1; p.s.position.copy(p.curve.getPoint(p.t)); });
-  nodeMeshes.forEach(m=>{ const u=m.userData; const k = u.id===selected?1.8:(m===hover?1.4:1); const beat = u.hot&&!reduce ? 1+0.18*Math.sin(t*4+u.phase) : 1; u.glow.scale.setScalar(u.base*k*beat); });
-  if(brain.userData.core && !reduce) brain.userData.core.material.opacity = .45+.15*Math.sin(t*1.6);
+  const speed={idle:1,listening:1.3,thinking:3.2,speaking:1.8}[mood];
+  pulses.forEach(p=>{ p.t=(p.t+dt*p.v*speed)%1; p.s.position.copy(p.curve.getPoint(p.t)); });
+  nodeMeshes.forEach(m=>{ const u=m.userData, k=u.id===selected?1.8:(m===hover?1.4:1), beat=u.hot&&!reduce?1+0.18*Math.sin(t*4+u.phase):1, target=u.base*k*beat; u.cur+=(target-u.cur)*Math.min(1,dt*10); u.glow.scale.setScalar(u.cur); });
+  // o cérebro reage à conversa
+  const cc=COL[mood]; core.material.color.lerp(cc,Math.min(1,dt*4));
+  let co=.5, cs=.5;
+  if(!reduce){
+    if(mood==="idle"){ co=.45+.12*Math.sin(t*1.6); }
+    else if(mood==="listening"){ co=.65+.25*Math.sin(t*5); cs=.65+.08*Math.sin(t*5); }
+    else if(mood==="thinking"){ co=.7+.25*Math.sin(t*11); cs=.7; }
+    else { co=.6+.35*Math.abs(Math.sin(t*9)); cs=.6+.2*Math.abs(Math.sin(t*9)); }
+  }
+  core.material.opacity=co; core.scale.setScalar(core.scale.x+(cs-core.scale.x)*Math.min(1,dt*8));
+  web.material.opacity=mood==="thinking"?.28+.1*Math.sin(t*8):mood==="idle"?.16:.22;
   renderer.render(scene,camera);
   // rótulos
-  const w=innerWidth,h=innerHeight, camDist=camera.position.length();
-  const selArea = selected ? areaOf(projects.find(p=>p.id===selected)||{}) : focusArea;
-  labels.forEach(l=>{
-    v3.copy(l.pos).applyMatrix4(brain.matrixWorld);
-    const facing = v3.clone().normalize().dot(camera.position.clone().normalize());
-    v3.project(camera);
-    const show = v3.z<1 && (l.cls==="area" ? facing>-0.2 : (facing>0.15 && (camDist<3.6 || l.id===selected || (selArea && areaOf(projects.find(p=>p.id===l.id)||{})===selArea) || (hover&&hover.userData.id===l.id))));
-    l.el.classList.toggle("hide",!show);
-    if(show) l.el.style.transform=`translate(${(v3.x+1)/2*w}px,${(1-v3.y)/2*h}px) translate(-50%,-150%)`;
-  });
+  const w=innerWidth,h=innerHeight, camDist=camera.position.distanceTo(controls.target)+controls.target.length(), selArea=selected?areaOf(byId[selected]):focusArea;
+  V.cam.copy(camera.position).normalize();
+  for(const l of labels){
+    V.a.copy(l.pos).applyMatrix4(brain.matrixWorld);
+    const facing=V.n.copy(V.a).normalize().dot(V.cam);
+    V.a.project(camera);
+    const show=V.a.z<1&&(l.cls==="area"?facing>-0.2:(facing>0.15&&(camDist<3.6||l.id===selected||(selArea&&l.area===selArea)||(hover&&hover.userData.id===l.id))));
+    if(show!==l.shown){ l.el.classList.toggle("hide",!show); l.shown=show; }
+    if(show) l.el.style.transform=`translate(${((V.a.x+1)/2*w).toFixed(1)}px,${((1-V.a.y)/2*h).toFixed(1)}px) translate(-50%,-150%)`;
+  }
 }
 
-/* ---------- UI ---------- */
+/* ================= painel e legenda ================= */
 function renderStats(){
   const act=projects.filter(p=>p.status==="ativo").length, wk=projects.filter(p=>{const d=daysAgo(p.last_activity);return d!==null&&d<=7}).length;
   $("#stats").innerHTML=`<span><b>${projects.length}</b> neurônios</span><span><b>${act}</b> ativos</span><span><b>${wk}</b> pulsando esta semana</span>`;
 }
 function renderLegend(){
   const g=groups();
-  $("#legend").innerHTML = Object.keys(AREAS).filter(a=>g[a]).map(a=>`<button type="button" data-area="${esc(a)}" aria-pressed="${focusArea===a}" style="--c:${AREAS[a].hex}"><i></i>${esc(a)} · ${g[a].length}</button>`).join("") + `<span class="hint">brilho pulsando = mexido nos últimos 7 dias · neurônio apagado = pausado</span>`;
+  $("#legend").innerHTML=Object.keys(AREAS).filter(a=>g[a]).map(a=>`<button type="button" data-area="${esc(a)}" aria-pressed="${focusArea===a}" style="--c:${AREAS[a].hex}"><i></i>${esc(a)} · ${g[a].length}</button>`).join("");
 }
 function renderPanel(){
-  const el=$("#panel"); const p=projects.find(x=>x.id===selected);
+  const el=$("#panel"), p=byId[selected];
   if(!p){
-    const pool = focusArea ? projects.filter(x=>areaOf(x)===focusArea) : projects;
+    const pool=focusArea?projects.filter(x=>areaOf(x)===focusArea):projects;
     const recent=[...pool].sort((a,b)=>(b.last_activity||"").localeCompare(a.last_activity||"")).slice(0,focusArea?12:5);
-    el.style.setProperty("--c", focusArea?AREAS[focusArea].hex:"#7fd8ff");
-    el.hidden = !projects.length && !canWrite;
+    el.style.setProperty("--c",focusArea?AREAS[focusArea].hex:"#7fd8ff");
     el.innerHTML=`<div><div class="eyebrow">${focusArea?esc(AREAS[focusArea].lobe):"Atividade recente"}</div><h2>${focusArea?esc(focusArea):"O que está vivo agora"}</h2></div>
-      <div class="feed">${recent.map(r=>`<button type="button" data-id="${esc(r.id)}" style="--c:${AREAS[areaOf(r)].hex}"><b>${esc(r.name)}</b><span>${esc(r.last_note||r.desc)} · ${whenTxt(r.last_activity)}</span></button>`).join("") || `<p class="msg">Nenhum projeto ainda.</p>`}</div>
-      ${canWrite?`<form id="add"><div class="eyebrow">Novo neurônio</div>
+      <div class="feed">${recent.map(r=>`<button type="button" data-id="${esc(r.id)}" style="--c:${AREAS[areaOf(r)].hex}"><b>${esc(r.name)}</b><span>${esc(r.last_note||r.desc)} · ${whenTxt(r.last_activity)}</span></button>`).join("")||`<p class="msg">Nenhum projeto ainda. Diga “cria um projeto chamado…” ou use o formulário.</p>`}</div>
+      ${canWrite?`<form class="f" id="add"><div class="eyebrow">Novo neurônio</div>
         <label for="n-name">Nome do projeto<input id="n-name" required placeholder="Ex.: Canal de curiosidades"></label>
         <label for="n-area">Área<select id="n-area">${Object.keys(AREAS).map(a=>`<option${a===focusArea?" selected":""}>${esc(a)}</option>`).join("")}</select></label>
         <label for="n-desc">Do que se trata<textarea id="n-desc"></textarea></label>
         <div class="row"><button class="b" type="submit">Adicionar ao cérebro</button><span class="msg" id="n-msg"></span></div></form>`:""}`;
-    const f=$("#add"); if(f) f.onsubmit=async e=>{ e.preventDefault(); const name=$("#n-name").value.trim(); if(!name)return;
-      const id=name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)||("p"+Date.now());
-      $("#n-msg").textContent="Adicionando…";
-      try{ await db.doc("projects/"+id).set({name,area:$("#n-area").value,desc:$("#n-desc").value.trim(),status:"ideia",last_activity:new Date().toISOString()}); selected=id; }catch{ $("#n-msg").textContent="Não deu pra adicionar."; } };
+    const f=$("#add"); if(f) f.onsubmit=async e=>{ e.preventDefault(); const name=$("#n-name").value.trim(); if(!name)return; $("#n-msg").textContent="Adicionando…";
+      try{ const id=await createProject({name,area:$("#n-area").value,desc:$("#n-desc").value.trim()}); selected=id; }catch{ $("#n-msg").textContent="Não deu pra adicionar."; } };
     return;
   }
-  el.hidden=false;
   const A=AREAS[areaOf(p)]; el.style.setProperty("--c",A.hex);
   const links=[...(p.repo?[{label:"GitHub",url:"https://github.com/"+p.repo}]:[]),...(Array.isArray(p.links)?p.links:[])].map(l=>{const u=safeUrl(l.url);return u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`:""}).join("");
   el.innerHTML=`<div><div class="eyebrow">${esc(areaOf(p))} · ${esc(A.lobe)}</div><h2>${esc(p.name)}</h2></div>
@@ -352,7 +367,7 @@ function renderPanel(){
     ${p.next_step?`<div class="next"><div class="eyebrow">Próximo passo</div>${esc(p.next_step)}</div>`:""}
     <dl>${p.last_note?`<dt>Último feito</dt><dd>${esc(p.last_note)}</dd>`:""}${p.stack?`<dt>Stack</dt><dd>${esc(p.stack)}</dd>`:""}${p.repo?`<dt>Repositório</dt><dd class="mono">${esc(p.repo)}</dd>`:""}</dl>
     ${links?`<div class="links">${links}</div>`:""}
-    ${canWrite?`<form id="edit"><div class="eyebrow">Atualizar</div>
+    ${canWrite?`<form class="f" id="edit"><div class="eyebrow">Atualizar</div>
       <label for="f-status">Status<select id="f-status">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}"${p.status===k?" selected":""}>${v}</option>`).join("")}</select></label>
       <label for="f-note">O que você fez<input id="f-note" value="${esc(p.last_note)}" placeholder="Ex.: publiquei o vídeo 3"></label>
       <label for="f-next">Próximo passo<textarea id="f-next">${esc(p.next_step)}</textarea></label>
@@ -360,40 +375,151 @@ function renderPanel(){
       <div class="danger" id="del-zone"><button class="b g del" type="button" id="del">Apagar do cérebro</button></div></form>`
       :`<div class="row"><button class="b g" type="button" id="close">Fechar</button></div>`}`;
   $("#close").onclick=()=>select(null);
-  const dz=$("#del-zone");
-  if(dz){
-    const ask=()=>{ dz.innerHTML=`<span class="msg">Apagar <b>${esc(p.name)}</b> de vez? Não dá pra desfazer.</span><div class="row"><button class="b del-yes" type="button" id="del-yes">Sim, apagar</button><button class="b g" type="button" id="del-no">Cancelar</button></div>`;
-      $("#del-no").onclick=()=>{ dz.innerHTML=`<button class="b g del" type="button" id="del">Apagar do cérebro</button>`; $("#del").onclick=ask; };
-      $("#del-yes").onclick=async()=>{ const b=$("#del-yes"); b.disabled=true; b.textContent="Apagando…";
-        try{ await db.doc("projects/"+p.id).delete(); select(null); }
-        catch(err){ dz.innerHTML=`<span class="msg">${err&&err.code==="permission_denied"?"Só quem edita o cérebro pode apagar.":"Não apagou. Tente de novo."}</span>`; } };
-      $("#del-yes").focus(); };
-    $("#del").onclick=ask;
-  }
+  if($("#del")) $("#del").onclick=()=>askDelete(p.id);
   const f=$("#edit"); if(f) f.onsubmit=async e=>{ e.preventDefault(); const m=$("#f-msg"); m.textContent="Salvando…";
-    try{ await db.doc("projects/"+p.id).update({status:$("#f-status").value,last_note:$("#f-note").value.trim(),next_step:$("#f-next").value.trim(),last_activity:new Date().toISOString()}); m.textContent="Salvo"; }
+    try{ await updateProject(p.id,{status:$("#f-status").value,last_note:$("#f-note").value.trim(),next_step:$("#f-next").value.trim()}); m.textContent="Salvo"; }
     catch(err){ m.textContent=err&&err.code==="permission_denied"?"Só quem edita o cérebro pode salvar.":"Não salvou. Tente de novo."; } };
 }
+let pendingDelete=null;
+function askDelete(id){
+  const p=byId[id]; if(!p) return;
+  if(selected!==id) select(id);
+  pendingDelete=id;
+  const dz=$("#del-zone"); if(!dz) return;
+  dz.innerHTML=`<span class="msg">Apagar <b>${esc(p.name)}</b> de vez? Não dá pra desfazer.</span><div class="row"><button class="b del-yes" type="button" id="del-yes">Sim, apagar</button><button class="b g" type="button" id="del-no">Cancelar</button></div>`;
+  $("#del-no").onclick=()=>{ pendingDelete=null; renderPanel(); };
+  $("#del-yes").onclick=async()=>{ const b=$("#del-yes"); b.disabled=true; b.textContent="Apagando…";
+    try{ await deleteProject(id); }catch(err){ dz.innerHTML=`<span class="msg">${err&&err.code==="permission_denied"?"Só quem edita o cérebro pode apagar.":"Não apagou. Tente de novo."}</span>`; } };
+  dz.scrollIntoView({block:"nearest"});
+}
 document.addEventListener("click",e=>{
-  const a=e.target.closest(".legend [data-area]"); if(a){ focusOn(a.dataset.area); return; }
-  const b=e.target.closest(".feed [data-id]"); if(b){ select(b.dataset.id); }
+  const a=e.target.closest(".legend [data-area]"); if(a){ setArea(focusArea===a.dataset.area?null:a.dataset.area); return; }
+  const b=e.target.closest(".feed [data-id]"); if(b) select(b.dataset.id);
 });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ focusArea=null; select(null); renderLegend(); } });
 
-function refresh(){ renderStats(); renderLegend(); buildNodes(); renderPanel(); }
+/* ================= dados ================= */
+function requireWrite(){ if(!db||!canWrite) throw Object.assign(new Error("Só o dono do cérebro pode alterar projetos."),{code:"permission_denied"}); }
+async function updateProject(id,patch){ requireWrite(); if(!byId[id]) throw new Error("Projeto não encontrado: "+id); await db.doc("projects/"+id).update({...patch,last_activity:new Date().toISOString()}); }
+async function createProject({name,area,desc,status,next_step}){
+  requireWrite(); let id=slug(name)||("p"+Date.now()); if(byId[id]) id+="-"+Date.now().toString(36).slice(-4);
+  await db.doc("projects/"+id).set({name,area:AREAS[area]?area:"Outros",desc:desc||"",status:STATUS[status]?status:"ideia",next_step:next_step||"",last_note:"",last_activity:new Date().toISOString()});
+  return id;
+}
+async function deleteProject(id){ requireWrite(); await db.doc("projects/"+id).delete(); pendingDelete=null; if(selected===id) select(null); }
+function refresh(){
+  byId=Object.fromEntries(projects.map(p=>[p.id,p]));
+  const sig=projects.map(p=>[p.id,p.area,p.status,p.name,p.last_activity].join("|")).sort().join("~");
+  if(sig!==lastSig){ lastSig=sig; buildNodes(); }
+  renderStats(); renderLegend();
+  const typing=document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#panel form");
+  if(!typing&&!pendingDelete) renderPanel();
+}
+
+/* ================= Jarvis: voz + Claude ================= */
+let dict=null, tts=null, sample=null, muted=false, busy=false, heard="", silence=null, history=[], abortCtl=null;
+try{ muted=localStorage.getItem("cerebro-mudo")==="1"; }catch{}
+function setMood(m){ mood=m; document.body.dataset.mood=m; }
+function setMute(v){ muted=v; $("#mute").textContent="voz: "+(v?"desligada":"ligada"); $("#mute").setAttribute("aria-pressed",String(v)); try{localStorage.setItem("cerebro-mudo",v?"1":"0")}catch{} if(v&&tts){ try{tts.stop()}catch{} if(mood==="speaking") setMood("idle"); } }
+$("#mute").onclick=()=>setMute(!muted); setMute(muted);
+
+const TOOLS=[
+  {name:"listar_projetos",description:"Lista todos os projetos do cérebro com id, nome, área, status, descrição, último feito, próximo passo e dias desde a última atividade.",inputSchema:{type:"object",properties:{}},
+    execute:()=>projects.map(p=>({id:p.id,nome:p.name,area:areaOf(p),status:p.status,descricao:p.desc||"",ultimo_feito:p.last_note||"",proximo_passo:p.next_step||"",dias_sem_atividade:daysAgo(p.last_activity),stack:p.stack||""}))},
+  {name:"mostrar_projeto",description:"Gira o cérebro até o neurônio de um projeto e abre o painel dele. Use sempre que falar de um projeto específico.",inputSchema:{type:"object",properties:{id:{type:"string"}},required:["id"]},
+    execute:({id})=>{ if(!byId[id]) throw new Error("Projeto não encontrado: "+id); select(id); return "Mostrando "+byId[id].name; }},
+  {name:"mostrar_area",description:"Gira o cérebro até uma área (lobo) e destaca os projetos dela.",inputSchema:{type:"object",properties:{area:{type:"string",enum:Object.keys(AREAS)}},required:["area"]},
+    execute:({area})=>{ setArea(area); return "Mostrando a área "+area; }},
+  {name:"visao_geral",description:"Volta para a visão do cérebro inteiro girando.",inputSchema:{type:"object",properties:{}},
+    execute:()=>{ setArea(null); return "Visão geral"; }},
+  {name:"atualizar_projeto",description:"Atualiza um projeto existente. Mande só os campos que mudaram.",inputSchema:{type:"object",properties:{id:{type:"string"},status:{type:"string",enum:Object.keys(STATUS)},ultimo_feito:{type:"string"},proximo_passo:{type:"string"},descricao:{type:"string"},nome:{type:"string"},area:{type:"string",enum:Object.keys(AREAS)}},required:["id"]},
+    execute:async i=>{ const patch={}; if(i.status)patch.status=i.status; if(i.ultimo_feito!=null)patch.last_note=i.ultimo_feito; if(i.proximo_passo!=null)patch.next_step=i.proximo_passo; if(i.descricao!=null)patch.desc=i.descricao; if(i.nome)patch.name=i.nome; if(i.area)patch.area=i.area;
+      await updateProject(i.id,patch); select(i.id); return "Atualizado: "+(i.nome||byId[i.id].name); }},
+  {name:"criar_projeto",description:"Cria um novo projeto (neurônio) no cérebro.",inputSchema:{type:"object",properties:{nome:{type:"string"},area:{type:"string",enum:Object.keys(AREAS)},descricao:{type:"string"},status:{type:"string",enum:Object.keys(STATUS)},proximo_passo:{type:"string"}},required:["nome","area"]},
+    execute:async i=>{ const id=await createProject({name:i.nome,area:i.area,desc:i.descricao,status:i.status,next_step:i.proximo_passo}); setTimeout(()=>select(id),400); return "Criado com id "+id; }},
+  {name:"apagar_projeto",description:"Apaga um projeto de vez. A primeira chamada NÃO apaga: só mostra a confirmação na tela; então pergunte ao Lucas se ele quer mesmo apagar. Só chame de novo com confirmado=true depois que ele responder claramente que sim.",inputSchema:{type:"object",properties:{id:{type:"string"},confirmado:{type:"boolean"}},required:["id"]},
+    execute:async({id,confirmado})=>{ if(!byId[id]) throw new Error("Projeto não encontrado: "+id); requireWrite();
+      if(!confirmado||pendingDelete!==id){ askDelete(id); return "Confirmação aberta na tela. Pergunte se ele quer mesmo apagar "+byId[id].name+"."; }
+      const name=byId[id].name; await deleteProject(id); return "Apagado: "+name; }}
+];
+function systemText(){
+  const hoje=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  const resumo=projects.map(p=>`- ${p.id}: ${p.name} | ${areaOf(p)} | ${p.status} | ${daysAgo(p.last_activity)??"?"} dias sem atividade | próximo: ${p.next_step||"—"}`).join("\n");
+  return `Você é o Jarvis, o assistente de voz do "Cérebro", o painel 3D onde o Lucas controla todos os projetos dele (canais dark no YouTube/TikTok, a página @lucasdireitoo, brechós, apps).
+Regras:
+- Responda em português do Brasil, como fala: curto (1 a 3 frases), direto, sem markdown, sem listas, sem emoji. Sua resposta vai ser lida em voz alta.
+- Use as ferramentas pra ler e mudar os projetos. Nunca invente dados.
+- Quando falar de um projeto específico, chame mostrar_projeto pra girar o cérebro até ele. Pra uma área, mostrar_area.
+- Quando o Lucas contar que fez algo num projeto, registre com atualizar_projeto (ultimo_feito) e confirme em uma frase.
+- Pra apagar, siga a regra da ferramenta apagar_projeto: sempre confirme antes.
+- Se o pedido for ambíguo, pergunte em uma frase.
+Hoje é ${hoje}.${selected&&byId[selected]?` Na tela agora: ${byId[selected].name} (id ${selected}).`:focusArea?` Na tela agora: área ${focusArea}.`:""}
+Projetos (id: nome | área | status | atividade | próximo passo):
+${resumo||"(nenhum)"}`;
+}
+async function ask(text){
+  text=String(text||"").trim(); if(!text) return;
+  if(busy){ abortCtl&&abortCtl.abort(); }
+  if(!sample){ say("O assistente não está disponível aqui. Abra o cérebro pelo claude.ai num navegador."); return; }
+  busy=true; setMood("thinking"); $("#said").textContent="“"+text+"”"; $("#answer").textContent="…";
+  history.push({role:"user",content:text}); history=history.slice(-12); while(history.length&&history[0].role!=="user") history.shift();
+  const msgs=history.map((m,i)=>i===history.length-1?{role:"user",content:systemText()+"\n\nLucas disse: "+m.content}:m);
+  abortCtl=new AbortController(); const myCtl=abortCtl;
+  let reply="";
+  try{
+    const r=await sample(msgs,{tools:TOOLS,modelTier:"default",cache:false,signal:myCtl.signal,onText:({text})=>{ if(myCtl===abortCtl) $("#answer").textContent=text; }});
+    reply=(r.text||"").trim()||"Feito.";
+  }catch(e){
+    if(myCtl!==abortCtl) return;
+    reply=e&&e.code==="rate_limited"?"Muitos pedidos seguidos. Me dá uns segundos.":e&&e.code==="not_granted"?"Você não liberou o assistente pra esta página. Dá pra liberar no menu de permissões do artefato.":"Não consegui responder agora. Tenta de novo.";
+  }
+  if(myCtl!==abortCtl) return;
+  busy=false; history.push({role:"assistant",content:reply}); say(reply);
+}
+function say(text){
+  $("#answer").textContent=text;
+  if(!tts||muted){ setMood("idle"); return; }
+  setMood("speaking");
+  tts.speak(text.slice(0,1900),{voice:"rounded",language:"pt-BR",rate:1.08}).catch(()=>{}).finally(()=>{ if(mood==="speaking") setMood("idle"); });
+}
+function listen(){
+  if(!dict){ $("#askIn").focus(); if(!$("#answer").dataset.warned){ $("#answer").dataset.warned="1"; $("#answer").textContent="O microfone só funciona no Chrome/Edge ou no app do Claude no computador. Aqui, digite o comando."; } return; }
+  if(dict.active()){ dict.stop().catch(()=>{}); return; }
+  if(tts){ try{tts.stop()}catch{} }
+  if(busy&&abortCtl){ abortCtl.abort(); busy=false; }
+  heard=""; $("#said").textContent=""; $("#answer").textContent="Ouvindo…"; setMood("listening");
+  dict.start({language:"pt-BR"}).catch(e=>{ setMood("idle"); $("#answer").textContent=e&&e.code==="not_granted"?"O microfone foi bloqueado. Libere no menu de permissões ou digite o comando.":"Não consegui abrir o microfone. Tenta de novo ou digite."; });
+}
+function armSilence(){ clearTimeout(silence); silence=setTimeout(()=>{ if(dict&&dict.active()) dict.stop().catch(()=>{}); },1500); }
+$("#orb").addEventListener("click",listen);
+$("#ask").addEventListener("submit",e=>{ e.preventDefault(); const v=$("#askIn").value; $("#askIn").value=""; if(tts){try{tts.stop()}catch{}} ask(v); });
+document.addEventListener("keydown",e=>{
+  const typing=e.target.closest&&e.target.closest("input,textarea,select,[contenteditable]");
+  if(e.code==="Space"&&!typing&&!e.repeat){ e.preventDefault(); listen(); }
+  if(e.key==="Escape"){ if(dict&&dict.active()) dict.stop().catch(()=>{}); if(tts){try{tts.stop()}catch{}} pendingDelete=null; setArea(null); }
+});
+
+/* ================= início ================= */
 function setLive(on,txt){ $("#live").classList.toggle("on",on); $("#liveTxt").textContent=txt; }
-
-const ok = init();
-refresh();
+setMood("idle");
+init(); refresh();
 (async()=>{
   const timer=setTimeout(()=>setLive(false,"sem conexão com o banco"),10000);
-  const c=window.claude; db=c?await c.use("db"):null; const user=c?await c.use("user"):null;
+  const c=window.claude;
+  if(!c||!c.use){ clearTimeout(timer); setLive(false,"abra pelo claude.ai pra ver ao vivo"); return; }
+  c.use("dictation").then(d=>{ dict=d; if(!d) return;
+    d.onPartial(({text})=>{ $("#said").textContent=(heard+" "+text).trim(); armSilence(); });
+    d.onFinal(({text})=>{ heard=(heard+" "+text).trim(); $("#said").textContent=heard; armSilence(); });
+    d.onState(({state})=>{ if(state==="listening") setMood("listening"); if(state==="idle"){ clearTimeout(silence); const h=heard; heard=""; if(h) ask(h); else if(mood==="listening"){ setMood("idle"); $("#answer").textContent="Não ouvi nada. Toque no orbe e fale."; } } });
+  });
+  c.use("tts").then(t=>{ tts=t; if(!t) $("#mute").hidden=true; });
+  c.use("sample").then(s=>{ sample=s; });
+  db=await c.use("db"); const user=await c.use("user");
   if(!db){ clearTimeout(timer); setLive(false,"entre no claude.ai pra ver ao vivo"); return; }
-  canWrite = user ? await user.canEdit() : false;
+  canWrite=user?await user.canEdit():false; renderPanel();
   db.collection("projects").onSnapshot(snap=>{
     clearTimeout(timer);
     projects=snap.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));
-    if(selected && !projects.some(p=>p.id===selected)) selected=null;
+    if(selected&&!projects.some(p=>p.id===selected)) selected=null;
     setLive(true,"ao vivo · "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}));
     refresh();
   },()=>{ clearTimeout(timer); setLive(false,"conexão perdida, recarregue a página"); });
